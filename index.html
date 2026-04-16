@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spoon Stack — Your Operating System</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --gold:#e8a838;--bg:#f5f3ef;--card:#ffffff;--border:#e4e0d8;
+    --text:#2d2b28;--muted:#8a857d;--green:#4ade80;--red:#f87171;
+    --blue:#60a5fa;--purple:#a78bfa;--pink:#f472b6;--teal:#2dd4bf;--warm:#ece9e2;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+  /* NAV */
+  .nav{background:var(--warm);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100}
+  .logo{display:flex;align-items:center;gap:8px;padding-right:20px;border-right:1px solid var(--border);margin-right:14px;flex-shrink:0}
+  .logo-icon{width:30px;height:30px;border-radius:8px;background:rgba(232,168,56,.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800}
+  .logo-name{font-size:13px;font-weight:700;line-height:1}
+  .logo-tag{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+  .tabs{display:flex;flex:1}
+  .tab{background:transparent;border:none;border-bottom:2px solid transparent;padding:14px 16px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;font-family:inherit}
+  .tab.active{color:var(--text);font-weight:600;border-bottom-color:var(--gold)}
+  .nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .nav-date{font-size:11px;color:var(--muted)}
+  .progress-pill{font-size:11px;background:rgba(74,222,128,.15);color:var(--green);padding:3px 10px;border-radius:10px;font-weight:600}
+  .avatar{width:28px;height:28px;border-radius:50%;background:rgba(232,168,56,.2);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+
+  /* SPOON BAR */
+  .spoon-bar{padding:10px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-bottom:1px solid rgba(0,0,0,.06);transition:background .3s}
+  .spoon-bar.low{background:rgba(248,113,113,.06);border-bottom-color:rgba(248,113,113,.15)}
+  .spoon-bar.mid{background:rgba(232,168,56,.06);border-bottom-color:rgba(232,168,56,.15)}
+  .spoon-bar.high{background:rgba(74,222,128,.06);border-bottom-color:rgba(74,222,128,.15)}
+  .spoon-bar.full{background:rgba(45,212,191,.06);border-bottom-color:rgba(45,212,191,.15)}
+  .spoon-label{font-size:11px;color:var(--muted);flex-shrink:0}
+  .spoons{display:flex;gap:3px}
+  .spoon-pip{width:16px;height:16px;border-radius:4px;cursor:pointer;background:#d6d1c8;transition:background .12s;border:none}
+  .spoon-count{font-size:12px;font-weight:700}
+  .spoon-divider{width:1px;height:16px;background:var(--border)}
+  .mode-label{font-size:11px;font-weight:600}
+  .mode-msg{font-size:12px;color:var(--muted);flex:1}
+
+  /* CONTENT */
+  .content{max-width:1140px;margin:0 auto;padding:22px 20px 60px}
+
+  /* CARDS */
+  .card{background:var(--card);border-radius:14px;padding:16px 18px;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card.accent-red{border-color:rgba(248,113,113,.3)}
+  .card.accent-blue{border-color:rgba(96,165,250,.3)}
+  .section-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-bottom:10px}
+  .section-label.blue{color:var(--blue)}
+  .section-label.red{color:var(--red)}
+  .section-label.gold{color:var(--gold)}
+
+  /* GRID LAYOUTS */
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 300px;gap:14px;align-items:start}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .col{display:flex;flex-direction:column;gap:14px}
+
+  /* HEADING */
+  .page-title{font-size:22px;font-weight:700;color:#1a1815;margin-bottom:3px}
+  .page-sub{font-size:13px;color:var(--muted)}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+  .pct-block{text-align:right}
+  .pct-num{font-size:20px;font-weight:700}
+  .pct-sub{font-size:11px;color:var(--muted)}
+
+  /* CAPTURE */
+  .capture-wrap{margin-bottom:20px}
+  .capture-bar{display:flex;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:4px 4px 4px 14px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .capture-icon{color:var(--gold);font-size:15px;flex-shrink:0}
+  .capture-input{flex:1;background:transparent;border:none;color:var(--text);font-size:14px;outline:none;padding:10px 0;font-family:inherit}
+  .capture-btn{background:var(--gold);color:#000;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+  .capture-btn.empty{background:#d6d1c8;color:var(--muted)}
+  .captures-list{margin-top:5px;font-size:12px;color:#6b6760;padding-left:16px}
+
+  /* BOARD ROWS */
+  .board-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:#f7f5f1;cursor:pointer;margin-bottom:5px}
+  .board-emoji{font-size:17px;flex-shrink:0}
+  .board-name{font-size:12px;font-weight:600}
+  .board-detail{font-size:11px;color:var(--muted)}
+  .board-info{flex:1}
+
+  /* STATUS DOT */
+  .dot{display:inline-flex;align-items:center;gap:4px;font-size:11px}
+  .dot-circle{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+  /* TASKS */
+  .task-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:opacity .15s}
+  .task-row.done{background:#eef5ef;opacity:.6}
+  .task-row.pending{background:#f7f5f1}
+  .checkbox{width:17px;height:17px;border-radius:5px;flex-shrink:0;border:2px solid #c4bfb5;background:transparent;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;transition:all .15s}
+  .checkbox.checked{background:var(--green);border-color:var(--green);color:#000}
+  .task-text{font-size:13px;flex:1}
+  .task-text.done-text{text-decoration:line-through;color:var(--muted)}
+  .pill{font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0}
+  .progress-bar{height:4px;background:#d6d1c8;border-radius:2px;overflow:hidden;margin-top:10px}
+  .progress-fill{height:100%;border-radius:2px;background:var(--green);transition:width .3s ease}
+  .progress-sub{font-size:11px;color:var(--muted);text-align:center;margin-top:5px}
+
+  /* NUDGES */
+  .nudge-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+  .nudge-row:last-child{border-bottom:none}
+  .nudge-avatar{width:26px;height:26px;border-radius:50%;background:rgba(167,139,250,.15);color:var(--purple);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+  .nudge-name{font-size:13px}
+  .nudge-days{font-size:11px;font-weight:600}
+
+  /* WINS */
+  .win-row{display:flex;gap:8px;padding:5px 0;align-items:flex-start}
+  .win-star{color:var(--gold);font-size:11px;margin-top:2px;flex-shrink:0}
+  .win-text{font-size:12px;color:#4a4741}
+
+  /* CHEATSHEET */
+  .cheat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
+  .cheat-row:last-child{border-bottom:none}
+  .cheat-q{font-size:12px;color:var(--muted)}
+  .cheat-a{font-size:11px;color:var(--blue);font-weight:600;cursor:pointer}
+
+  /* QUICK LINKS */
+  .quick-link{display:flex;align-items:center;gap:8px;padding:7px 6px;border-radius:6px;cursor:pointer;font-size:13px;color:#5c5851}
+
+  /* JOLT */
+  .jolt-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .jolt-item{padding:10px 8px;border-radius:8px;cursor:pointer;text-align:center;background:#f7f5f1;border:1px solid transparent;transition:all .15s}
+  .jolt-item.active{background:rgba(232,168,56,.12);border-color:rgba(232,168,56,.4)}
+  .jolt-emoji{font-size:18px;margin-bottom:3px}
+  .jolt-label{font-size:10px;font-weight:600;color:#5c5851}
+  .jolt-label.active{color:var(--gold)}
+  .jolt-action{font-size:10px;color:var(--muted);margin-top:4px}
+
+  /* FAMILY HUB */
+  .sub-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:18px}
+  .sub-tab{background:transparent;border:none;border-bottom:2px solid transparent;padding:8px 14px;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
+  .sub-tab.active{color:var(--text);font-weight:600;border-bottom-color:var(--gold)}
+
+  .event-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .event-card{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--border)}
+  .event-card.urgent{border-color:rgba(248,113,113,.4)}
+  .event-title{font-size:13px;font-weight:600;margin-bottom:2px}
+  .event-who{font-size:12px;color:var(--muted)}
+  .event-when{font-size:12px;color:var(--blue);font-weight:600;margin-top:10px}
+
+  .meal-list{max-width:500px}
+  .meal-card{background:var(--card);border-radius:10px;padding:12px 14px;border:1px solid var(--border);margin-bottom:8px;display:flex;align-items:center;gap:14px}
+  .meal-day{width:36px;height:36px;border-radius:8px;background:rgba(232,168,56,.12);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold);flex-shrink:0}
+  .meal-name{font-size:14px}
+
+  .shortcut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  .shortcut-card{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--border);cursor:pointer;text-decoration:none;color:inherit;display:flex;gap:12px;align-items:flex-start;transition:box-shadow .15s}
+  .shortcut-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .shortcut-icon{width:36px;height:36px;border-radius:10px;background:rgba(232,168,56,.12);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .shortcut-name{font-size:13px;font-weight:600;margin-bottom:3px}
+  .shortcut-desc{font-size:11px;color:var(--muted);line-height:1.4}
+
+  .integration-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  .integration-card{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--border);cursor:pointer;display:flex;gap:12px;align-items:center}
+  .integration-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .integration-icon.connected{background:rgba(74,222,128,.12)}
+  .integration-icon.not-connected{background:#f0ede7}
+  .integration-name{font-size:13px;font-weight:600;margin-bottom:2px}
+  .integration-status{font-size:11px}
+  .integration-status.connected{color:var(--green)}
+  .integration-status.not-connected{color:var(--muted)}
+
+  .info-box{margin-top:16px;padding:12px 16px;border-radius:10px;font-size:12px;color:var(--muted)}
+  .info-box.gold{background:rgba(232,168,56,.07);border:1px solid rgba(232,168,56,.2)}
+  .info-box.blue{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2)}
+
+  /* CAREER */
+  .pipeline-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+  .pipeline-row:last-of-type{border-bottom:none}
+  .pipeline-co{font-size:14px;font-weight:600}
+  .pipeline-role{font-size:12px;color:var(--muted)}
+  .add-btn{margin-top:10px;font-size:12px;background:transparent;border-radius:8px;padding:6px 12px;cursor:pointer;font-family:inherit;transition:all .15s}
+
+  /* QUICK LINKS TAB */
+  .ql-section{margin-bottom:4px}
+  .ql-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;align-items:flex-start}
+  .ql-item:last-child{border-bottom:none}
+  .ql-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  .ql-name{font-size:13px;font-weight:600}
+  .ql-desc{font-size:11px;color:var(--muted);margin-top:1px}
+
+  /* HIDDEN PANELS */
+  .panel{display:none}
+  .panel.active{display:block}
+  .sub-panel{display:none}
+  .sub-panel.active{display:block}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    .grid-3{grid-template-columns:1fr 1fr}
+    .grid-3 .col:last-child{grid-column:1/-1}
+  }
+  @media(max-width:600px){
+    .grid-3,.grid-2{grid-template-columns:1fr}
+    .tabs .tab span.tab-label{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">
+    <div class="logo-icon">🥄</div>
+    <div>
+      <div class="logo-name">The Spoon Stack</div>
+      <div class="logo-tag">Stack your spoons · Run your life</div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('home',this)">⌂ <span class="tab-label">Home</span></button>
+    <button class="tab" onclick="showTab('family',this)">👨‍👩‍👧‍👦 <span class="tab-label">Family Hub</span></button>
+    <button class="tab" onclick="showTab('career',this)">🎯 <span class="tab-label">Career</span></button>
+    <button class="tab" onclick="showTab('quick',this)">⚡ <span class="tab-label">Quick Links</span></button>
+  </div>
+  <div class="nav-right">
+    <span class="nav-date" id="navDate"></span>
+    <span class="progress-pill" id="progressPill">0/5 done</span>
+    <div class="avatar">B</div>
+  </div>
+</nav>
+
+<!-- SPOON BAR -->
+<div class="spoon-bar" id="spoonBar">
+  <span class="spoon-label">Spoons:</span>
+  <div class="spoons" id="spoonPips"></div>
+  <span class="spoon-count" id="spoonCount">7/10</span>
+  <div class="spoon-divider"></div>
+  <span class="mode-label" id="modeLabel">🟢 Charged</span>
+  <span class="mode-msg" id="modeMsg">Solid day. Work your list in priority order. Protect your energy in the afternoon.</span>
+</div>
+
+<!-- ═══════════════════ HOME TAB ═══════════════════ -->
+<div id="panel-home" class="panel active">
+  <div class="content">
+    <div class="page-header">
+      <div>
+        <div class="page-title" id="greeting">Good morning, B.</div>
+        <div class="page-sub">Here's your board. You've got this.</div>
+      </div>
+      <div class="pct-block">
+        <div class="pct-num" id="pctNum" style="color:var(--green)">0%</div>
+        <div class="pct-sub">of today done</div>
+      </div>
+    </div>
+
+    <!-- Capture -->
+    <div class="capture-wrap">
+      <div class="capture-bar">
+        <span class="capture-icon">✦</span>
+        <input class="capture-input" id="captureInput" placeholder="Quick capture — idea, thought, to-do, anything..." onkeydown="if(event.key==='Enter')addCapture()">
+        <button class="capture-btn empty" id="captureBtn" onclick="addCapture()">Capture</button>
+      </div>
+      <div class="captures-list" id="capturesList" style="display:none"></div>
+    </div>
+
+    <div class="grid-3">
+      <!-- Col 1 -->
+      <div class="col">
+        <div class="card">
+          <div class="section-label">The Board</div>
+          <div id="boardRows"></div>
+        </div>
+        <div class="card">
+          <div class="section-label">Today's JOLT</div>
+          <div class="jolt-grid" id="joltGrid"></div>
+        </div>
+      </div>
+      <!-- Col 2 -->
+      <div class="col">
+        <div class="card">
+          <div class="section-label">Today's Tasks</div>
+          <div id="taskList"></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+          <div class="progress-sub" id="progressSub">0 remaining</div>
+        </div>
+        <div class="card accent-red">
+          <div class="section-label red">Reach Out</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Haven't heard from you:</div>
+          <div class="nudge-row"><div style="display:flex;align-items:center;gap:8px"><div class="nudge-avatar">M</div><span class="nudge-name">Mom</span></div><span class="nudge-days" style="color:var(--red)">18d ago</span></div>
+          <div class="nudge-row"><div style="display:flex;align-items:center;gap:8px"><div class="nudge-avatar">J</div><span class="nudge-name">Jasmine</span></div><span class="nudge-days" style="color:var(--gold)">14d ago</span></div>
+          <div class="nudge-row"><div style="display:flex;align-items:center;gap:8px"><div class="nudge-avatar">M</div><span class="nudge-name">Marcus</span></div><span class="nudge-days" style="color:var(--red)">21d ago</span></div>
+        </div>
+      </div>
+      <!-- Col 3 -->
+      <div class="col">
+        <div class="card">
+          <div class="section-label">Recent Wins ✦</div>
+          <div class="win-row"><span class="win-star">✦</span><span class="win-text">Built entire Spoon Stack system from scratch</span></div>
+          <div class="win-row"><span class="win-star">✦</span><span class="win-text">Landed Stripe interview</span></div>
+          <div class="win-row"><span class="win-star">✦</span><span class="win-text">Kept morning routine 4 days straight</span></div>
+          <div class="win-row"><span class="win-star">✦</span><span class="win-text">Captured 4 ideas before they floated away</span></div>
+        </div>
+        <div class="card accent-blue">
+          <div class="section-label blue">Struggling? Start here.</div>
+          <div class="cheat-row"><span class="cheat-q">"What's for dinner?"</span><span class="cheat-a">→ Meals</span></div>
+          <div class="cheat-row"><span class="cheat-q">"Can't start a task"</span><span class="cheat-a">→ Decision Defaults</span></div>
+          <div class="cheat-row"><span class="cheat-q">"House is a disaster"</span><span class="cheat-a">→ Household</span></div>
+          <div class="cheat-row"><span class="cheat-q">"Zero energy"</span><span class="cheat-a">→ Low Spoon Playbook</span></div>
+          <div class="cheat-row"><span class="cheat-q">"Everything's out of control"</span><span class="cheat-a">→ Pick one above</span></div>
+        </div>
+        <div class="card">
+          <div class="section-label">Quick Links</div>
+          <div class="quick-link">🆘 Struggle Cheatsheet</div>
+          <div class="quick-link">🎯 Decision Defaults</div>
+          <div class="quick-link">🛒 Meals &amp; Groceries</div>
+          <div class="quick-link">🔋 Low Spoon Playbook</div>
+          <div class="quick-link">💡 Ideas Inbox</div>
+          <div class="quick-link">📋 Weekly Review</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FAMILY HUB TAB ═══════════════════ -->
+<div id="panel-family" class="panel">
+  <div class="content">
+    <div class="page-header" style="margin-bottom:0">
+      <div><div class="page-title">Family Hub 👨‍👩‍👧‍👦</div><div class="page-sub">Everyone, everything, all in one place.</div></div>
+    </div>
+    <div style="height:18px"></div>
+    <div class="sub-tabs">
+      <button class="sub-tab active" onclick="showSubTab('schedule',this)">Schedule</button>
+      <button class="sub-tab" onclick="showSubTab('meals',this)">This Week's Meals</button>
+      <button class="sub-tab" onclick="showSubTab('shortcuts',this)">iOS Shortcuts</button>
+      <button class="sub-tab" onclick="showSubTab('integrations',this)">Integrations</button>
+    </div>
+
+    <div id="sub-schedule" class="sub-panel active">
+      <div class="event-grid">
+        <div class="event-card urgent"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="event-title">IEP Meeting</div><div class="event-who">Twin A</div></div><span class="pill" style="background:rgba(248,113,113,.15);color:var(--red)">Urgent</span></div><div class="event-when">📅 Thu 2pm</div></div>
+        <div class="event-card"><div class="event-title">Speech Therapy</div><div class="event-who">Twin B</div><div class="event-when">📅 Fri 10am</div></div>
+        <div class="event-card"><div class="event-title">Chess Club Pickup</div><div class="event-who">Kid 1</div><div class="event-when">📅 Wed 4pm</div></div>
+        <div class="event-card"><div class="event-title">Doctor Appt</div><div class="event-who">Husband</div><div class="event-when">📅 Sat 9am</div></div>
+      </div>
+    </div>
+
+    <div id="sub-meals" class="sub-panel">
+      <div class="meal-list">
+        <div class="meal-card"><div class="meal-day">Mon</div><span class="meal-name">Rotisserie chicken + salad</span></div>
+        <div class="meal-card"><div class="meal-day">Tue</div><span class="meal-name">Pasta night (twins love it)</span></div>
+        <div class="meal-card"><div class="meal-day">Wed</div><span class="meal-name">Takeout — late pickup day</span></div>
+        <div class="meal-card"><div class="meal-day">Thu</div><span class="meal-name">Sheet pan veggies + sausage</span></div>
+        <div class="meal-card"><div class="meal-day">Fri</div><span class="meal-name">Pizza Friday 🍕</span></div>
+        <button style="font-size:13px;color:var(--blue);background:transparent;border:1px solid rgba(96,165,250,.3);border-radius:8px;padding:8px 14px;cursor:pointer;font-family:inherit;margin-top:4px">+ Add meal or swap</button>
+      </div>
+    </div>
+
+    <div id="sub-shortcuts" class="sub-panel">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Tap any shortcut to run it on your iPhone. Or say "Hey Siri, [shortcut name]".</div>
+      <div class="shortcut-grid">
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Morning%20Brief"><div class="shortcut-icon">☀️</div><div><div class="shortcut-name">Morning Brief</div><div class="shortcut-desc">Weather + calendar + top 3 tasks read aloud</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Quick%20Capture"><div class="shortcut-icon">✦</div><div><div class="shortcut-name">Quick Capture</div><div class="shortcut-desc">Speak idea → saves to Ideas Inbox</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Whats%20for%20Dinner"><div class="shortcut-icon">🍽️</div><div><div class="shortcut-name">What's for Dinner</div><div class="shortcut-desc">Random pick from your meal menu</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Grocery%20Add"><div class="shortcut-icon">🛒</div><div><div class="shortcut-name">Grocery Add</div><div class="shortcut-desc">Add item to shared family list via Siri</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Low%20Spoon%20Dinner"><div class="shortcut-icon">🔋</div><div><div class="shortcut-name">Low Spoon Dinner</div><div class="shortcut-desc">Laziest possible dinner from your list</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Reach%20Out"><div class="shortcut-icon">💬</div><div><div class="shortcut-name">Reach Out</div><div class="shortcut-desc">Random pick from inner circle → opens Messages</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Family%20Announcement"><div class="shortcut-icon">📢</div><div><div class="shortcut-name">Family Announce</div><div class="shortcut-desc">Sends message to Alexa in all rooms</div></div></a>
+        <a class="shortcut-card" href="shortcuts://run-shortcut?name=Weekly%20Review"><div class="shortcut-icon">📋</div><div><div class="shortcut-name">Weekly Review</div><div class="shortcut-desc">Opens Sunday reset template</div></div></a>
+      </div>
+      <div class="info-box blue"><strong style="color:var(--blue)">Setup note:</strong> Open the Shortcuts app on your iPhone and create each shortcut with the matching name. These links will deep-link directly to them once installed.</div>
+    </div>
+
+    <div id="sub-integrations" class="sub-panel">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Apps connected to your Spoon Stack.</div>
+      <div class="integration-grid">
+        <div class="integration-card"><div class="integration-icon connected">📅</div><div><div class="integration-name">Google Calendar</div><div class="integration-status connected">● Synced · 3 events today</div></div></div>
+        <div class="integration-card"><div class="integration-icon connected">✅</div><div><div class="integration-name">Apple Reminders</div><div class="integration-status connected">● Family grocery list active</div></div></div>
+        <div class="integration-card"><div class="integration-icon connected">🔊</div><div><div class="integration-name">Alexa</div><div class="integration-status connected">● 4 routines running</div></div></div>
+        <div class="integration-card"><div class="integration-icon connected">⚡</div><div><div class="integration-name">IFTTT</div><div class="integration-status connected">● 6 applets active</div></div></div>
+        <div class="integration-card"><div class="integration-icon not-connected">📝</div><div><div class="integration-name">Notion</div><div class="integration-status not-connected">○ Tap to connect</div></div></div>
+        <div class="integration-card"><div class="integration-icon not-connected">🎵</div><div><div class="integration-name">Spotify</div><div class="integration-status not-connected">○ Tap to connect</div></div></div>
+      </div>
+      <div class="info-box gold"><strong style="color:var(--gold)">Coming soon:</strong> Google Calendar live sync, Apple Health spoon suggestions, Alexa two-way messaging.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CAREER TAB ═══════════════════ -->
+<div id="panel-career" class="panel">
+  <div class="content">
+    <div class="page-header"><div><div class="page-title">Career Pipeline 🎯</div><div class="page-sub">Corporate search + government contracts, side by side.</div></div></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="section-label blue">Corporate Search</div>
+        <div class="pipeline-row"><div><div class="pipeline-co">Stripe</div><div class="pipeline-role">Head of Data Platform</div></div><span class="pill" style="background:rgba(74,222,128,.15);color:var(--green)">Interviewing</span></div>
+        <div class="pipeline-row"><div><div class="pipeline-co">Datadog</div><div class="pipeline-role">Dir. Data Architecture</div></div><span class="pill" style="background:rgba(96,165,250,.15);color:var(--blue)">Applied</span></div>
+        <div class="pipeline-row"><div><div class="pipeline-co">Salesforce</div><div class="pipeline-role">VP Enterprise Data</div></div><span class="pill" style="background:rgba(232,168,56,.15);color:var(--gold)">Researching</span></div>
+        <button class="add-btn" style="color:var(--blue);border:1px solid rgba(96,165,250,.3)">+ Add application</button>
+      </div>
+      <div class="card">
+        <div class="section-label gold">Gov Contracts</div>
+        <div class="pipeline-row"><div><div class="pipeline-co">DeKalb County</div><div class="pipeline-role">AI Process Automation</div></div><div style="text-align:right"><span class="pill" style="background:rgba(232,168,56,.15);color:var(--gold)">Drafting</span><div style="font-size:10px;color:var(--muted);margin-top:4px">Due Apr 18</div></div></div>
+        <div class="pipeline-row"><div><div class="pipeline-co">City of Atlanta</div><div class="pipeline-role">Data Integration Consult</div></div><div style="text-align:right"><span class="pill" style="background:rgba(232,168,56,.15);color:var(--gold)">Researching</span><div style="font-size:10px;color:var(--muted);margin-top:4px">Due Apr 25</div></div></div>
+        <button class="add-btn" style="color:var(--gold);border:1px solid rgba(232,168,56,.3)">+ Add opportunity</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ QUICK LINKS TAB ═══════════════════ -->
+<div id="panel-quick" class="panel">
+  <div class="content">
+    <div class="page-header"><div><div class="page-title">Quick Links ⚡</div><div class="page-sub">Every page in your system, one tap away.</div></div></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="section-label red">When You're Struggling</div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(248,113,113,.1)">🆘</div><div><div class="ql-name">Struggle Cheatsheet</div><div class="ql-desc">I'm overwhelmed → find the answer in 2 seconds</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(96,165,250,.1)">🎯</div><div><div class="ql-name">Decision Defaults</div><div class="ql-desc">Pre-made answers for every low-stakes decision</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(248,113,113,.1)">🔋</div><div><div class="ql-name">Low Spoon Playbook</div><div class="ql-desc">Survival mode: Level 1, 2, and 3 protocols</div></div></div>
+      </div>
+      <div class="card">
+        <div class="section-label" style="color:var(--green)">Daily Life</div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(74,222,128,.1)">🍽️</div><div><div class="ql-name">Meals &amp; Groceries</div><div class="ql-desc">Meal menu, always-buy list, lazy night lifesavers</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(74,222,128,.1)">📅</div><div><div class="ql-name">Calendar &amp; Time</div><div class="ql-desc">Schedule, upcoming events, time blindness tools</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(74,222,128,.1)">🎁</div><div><div class="ql-name">Gifts &amp; Holidays</div><div class="ql-desc">Last-minute gift playbook + gift stash</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(74,222,128,.1)">🏠</div><div><div class="ql-name">Where Is Everything</div><div class="ql-desc">The house index — where things live</div></div></div>
+      </div>
+      <div class="card">
+        <div class="section-label" style="color:var(--purple)">Me</div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(167,139,250,.1)">💆</div><div><div class="ql-name">Self-Care Menu</div><div class="ql-desc">Recharge options sorted by spoon cost</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(167,139,250,.1)">✦</div><div><div class="ql-name">Wins Journal</div><div class="ql-desc">Read your receipts on hard days</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(167,139,250,.1)">📋</div><div><div class="ql-name">Weekly Review</div><div class="ql-desc">Sunday reset template</div></div></div>
+      </div>
+      <div class="card">
+        <div class="section-label gold">Capture &amp; Ideas</div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(232,168,56,.1)">💡</div><div><div class="ql-name">Ideas Inbox</div><div class="ql-desc">The butterfly net — capture before it floats away</div></div></div>
+        <div class="ql-item"><div class="ql-icon" style="background:rgba(232,168,56,.1)">📝</div><div><div class="ql-name">Quick Capture</div><div class="ql-desc">Drop it. Don't organize it yet.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const tasks = [
+  {text:"Follow up with Stripe recruiter",done:false,area:"career"},
+  {text:"Draft DeKalb County proposal intro",done:false,area:"career"},
+  {text:"Grocery run — check always-buy list",done:false,area:"family"},
+  {text:"Twin A — IEP meeting prep",done:false,area:"family"},
+  {text:"Pay electric bill",done:true,area:"money"},
+];
+const areaColors = {career:"#60a5fa",family:"#f472b6",money:"#e8a838",daily:"#4ade80",home:"#2dd4bf"};
+const areas = [
+  {name:"Career",status:"active",emoji:"🎯",detail:"2 apps active · 1 proposal drafting",color:"#60a5fa"},
+  {name:"Money",status:"ok",emoji:"💰",detail:"Gap: $2,140 remaining this month",color:"#4ade80"},
+  {name:"Meals",status:"check",emoji:"🍽️",detail:"Grocery run needed",color:"#e8a838"},
+  {name:"Family",status:"attention",emoji:"👨‍👩‍👧‍👦",detail:"IEP meeting Thursday",color:"#f472b6"},
+  {name:"Health",status:"ok",emoji:"🧠",detail:"Energy: 7/10 this week",color:"#a78bfa"},
+  {name:"Relationships",status:"nudge",emoji:"💬",detail:"3 people haven't heard from you in 2w+",color:"#f87171"},
+  {name:"Home",status:"ok",emoji:"🏠",detail:"HVAC filter due this week",color:"#2dd4bf"},
+  {name:"Ideas",status:"ok",emoji:"💡",detail:"4 captured · 1 worth exploring",color:"#e8a838"},
+];
+const jolts = [
+  {key:"connection",label:"Connection Spark",icon:"💬",action:"Text someone who energizes you"},
+  {key:"challenge",label:"Challenge Charge",icon:"⚡",action:"Knock out one small win"},
+  {key:"reset",label:"Dynamic Reset",icon:"🔄",action:"10 min on something creative"},
+  {key:"laugh",label:"Laughter Lift",icon:"😂",action:"Find something genuinely funny"},
+];
+const statusMap = {
+  active:{color:"#60a5fa",label:"Active"},
+  ok:{color:"#4ade80",label:"Good"},
+  check:{color:"#e8a838",label:"Check"},
+  attention:{color:"#e8a838",label:"Attention"},
+  nudge:{color:"#f87171",label:"Overdue"},
+};
+const spoonModes = [
+  {max:3,  cls:"low",  emoji:"🔴",label:"Survival Mode", msg:"Low spoon day. Non-negotiables only. Kids fed, meds taken, one glass of water. Everything else can wait."},
+  {max:6,  cls:"mid",  emoji:"🟡",label:"Half Battery",  msg:"You can function but be strategic. Pick your ONE real thing. Don't mistake this for a full day."},
+  {max:8,  cls:"high", emoji:"🟢",label:"Charged",       msg:"Solid day. Work your list in priority order. Protect your energy in the afternoon."},
+  {max:10, cls:"full", emoji:"✨",label:"Full Charge",   msg:"Great day for big stuff — deep work, proposals, the thing you've been avoiding."},
+];
+
+let spoons = 7;
+let activeJolt = null;
+let captures = [];
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+function init(){
+  updateDate();
+  renderSpoons();
+  renderBoard();
+  renderTasks();
+  renderJolts();
+  updateCapture();
+  setInterval(updateDate, 60000);
+}
+
+function updateDate(){
+  const now = new Date();
+  const h = now.getHours();
+  const greet = h<12?"Good morning":h<17?"Good afternoon":"Good evening";
+  const el = document.getElementById("greeting");
+  if(el) el.textContent = greet+", B.";
+  const nd = document.getElementById("navDate");
+  if(nd) nd.textContent = now.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"});
+}
+
+// ── Spoons ────────────────────────────────────────────────────────────────────
+function renderSpoons(){
+  const mode = spoonModes.find(m=>spoons<=m.max);
+  const bar = document.getElementById("spoonBar");
+  bar.className = "spoon-bar "+mode.cls;
+  document.getElementById("spoonCount").textContent = spoons+"/10";
+  document.getElementById("spoonCount").style.color = mode.cls==="low"?"#f87171":mode.cls==="mid"?"#e8a838":mode.cls==="high"?"#4ade80":"#2dd4bf";
+  document.getElementById("modeLabel").textContent = mode.emoji+" "+mode.label;
+  document.getElementById("modeLabel").style.color = document.getElementById("spoonCount").style.color;
+  document.getElementById("modeMsg").textContent = mode.msg;
+
+  const pip = document.getElementById("spoonPips");
+  pip.innerHTML="";
+  for(let i=0;i<10;i++){
+    const d=document.createElement("div");
+    d.className="spoon-pip";
+    const filled = i<spoons;
+    d.style.background = filled?(mode.cls==="low"?"#f87171":mode.cls==="mid"?"#e8a838":mode.cls==="high"?"#4ade80":"#2dd4bf"):"#d6d1c8";
+    d.title="Set spoons to "+(i+1);
+    d.onclick=(()=>{const n=i+1;return()=>{spoons=n;renderSpoons();};})();
+    pip.appendChild(d);
+  }
+  // also update pct color
+  const pctEl = document.getElementById("pctNum");
+  if(pctEl) pctEl.style.color = document.getElementById("spoonCount").style.color;
+}
+
+// ── Board ─────────────────────────────────────────────────────────────────────
+function renderBoard(){
+  const container = document.getElementById("boardRows");
+  if(!container) return;
+  container.innerHTML = areas.map(a=>{
+    const s = statusMap[a.status]||{color:"#8a857d",label:a.status};
+    return `<div class="board-row">
+      <span class="board-emoji">${a.emoji}</span>
+      <div class="board-info"><div class="board-name">${a.name}</div><div class="board-detail">${a.detail}</div></div>
+      <span class="dot"><span class="dot-circle" style="background:${s.color}"></span><span style="color:${s.color};font-size:11px">${s.label}</span></span>
+    </div>`;
+  }).join("");
+}
+
+// ── Tasks ─────────────────────────────────────────────────────────────────────
+function renderTasks(){
+  const list = document.getElementById("taskList");
+  if(!list) return;
+  list.innerHTML = tasks.map((t,i)=>{
+    const c = areaColors[t.area]||"#8a857d";
+    return `<div class="task-row ${t.done?"done":"pending"}" onclick="toggleTask(${i})">
+      <div class="checkbox ${t.done?"checked":""}">${t.done?"✓":""}</div>
+      <span class="task-text ${t.done?"done-text":""}">${t.text}</span>
+      <span class="pill" style="background:${c}18;color:${c}">${t.area}</span>
+    </div>`;
+  }).join("");
+  const done = tasks.filter(t=>t.done).length;
+  const total = tasks.length;
+  const pct = Math.round(done/total*100);
+  document.getElementById("progressFill").style.width=pct+"%";
+  document.getElementById("progressSub").textContent = done===total?"All done! 🎉":`${total-done} remaining`;
+  document.getElementById("progressPill").textContent = done+"/"+total+" done";
+  document.getElementById("pctNum").textContent = pct+"%";
+}
+function toggleTask(i){ tasks[i].done=!tasks[i].done; renderTasks(); }
+
+// ── Jolts ─────────────────────────────────────────────────────────────────────
+function renderJolts(){
+  const grid = document.getElementById("joltGrid");
+  if(!grid) return;
+  grid.innerHTML = jolts.map(j=>`
+    <div class="jolt-item ${activeJolt===j.key?"active":""}" onclick="pickJolt('${j.key}')">
+      <div class="jolt-emoji">${j.icon}</div>
+      <div class="jolt-label ${activeJolt===j.key?"active":""}">${j.label}</div>
+      ${activeJolt===j.key?`<div class="jolt-action">${j.action}</div>`:""}
+    </div>`).join("");
+}
+function pickJolt(k){ activeJolt=activeJolt===k?null:k; renderJolts(); }
+
+// ── Capture ───────────────────────────────────────────────────────────────────
+let showCaptures = false;
+function updateCapture(){
+  const inp = document.getElementById("captureInput");
+  const btn = document.getElementById("captureBtn");
+  if(!inp||!btn) return;
+  inp.oninput = ()=>{
+    btn.className = "capture-btn"+(inp.value.trim()?" ":" empty");
+  };
+}
+function addCapture(){
+  const inp = document.getElementById("captureInput");
+  if(!inp||!inp.value.trim()) return;
+  const now = new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+  captures.unshift({text:inp.value.trim(),time:now});
+  inp.value="";
+  document.getElementById("captureBtn").className="capture-btn empty";
+  const cl = document.getElementById("capturesList");
+  cl.style.display="block";
+  cl.innerHTML = `<span onclick="toggleCaptures()" style="cursor:pointer;font-size:11px;color:var(--muted)">${showCaptures?"▾":"▸"} ${captures.length} captured today</span>`+
+    (showCaptures?captures.map(c=>`<div style="padding:3px 0 3px 16px"><span style="color:var(--muted)">${c.time}</span> — ${c.text}</div>`).join(""):"");
+}
+function toggleCaptures(){
+  showCaptures=!showCaptures;
+  const cl = document.getElementById("capturesList");
+  cl.innerHTML = `<span onclick="toggleCaptures()" style="cursor:pointer;font-size:11px;color:var(--muted)">${showCaptures?"▾":"▸"} ${captures.length} captured today</span>`+
+    (showCaptures?captures.map(c=>`<div style="padding:3px 0 3px 16px"><span style="color:var(--muted)">${c.time}</span> — ${c.text}</div>`).join(""):"");
+}
+
+// ── Tab navigation ────────────────────────────────────────────────────────────
+function showTab(id, btn){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("panel-"+id).classList.add("active");
+  btn.classList.add("active");
+}
+function showSubTab(id, btn){
+  document.querySelectorAll(".sub-panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".sub-tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById("sub-"+id).classList.add("active");
+  btn.classList.add("active");
+}
+
+init();
+</script>
+</body>
+</html>
