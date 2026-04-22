@@ -549,7 +549,7 @@ function renderHub(hub) {
     el.className = 'widget-thumb';
     el.style.setProperty('--hub-color', hub.color);
     el.style.cssText += `--hub-color:${hub.color}`;
-    el.innerHTML = `<style>.widget-thumb[data-id="${hub.id}-${i}"]::before{background:${hub.color}}</style><div class="wt-num">${w.num}</div><div class="wt-name">${w.name}</div><div class="wt-one">${w.one}</div>`;
+    el.innerHTML = `<style>.widget-thumb[data-id="${hub.id}-${i}"]::before{background:${hub.color}}</style><div class="wt-num">${String(i+1).padStart(2,'0')}</div><div class="wt-name">${w.name}</div><div class="wt-one">${w.one}</div>`;
     el.setAttribute('data-id', `${hub.id}-${i}`);
     el.onclick = () => openWidget(hub, w, i);
     grid.appendChild(el);
@@ -563,7 +563,7 @@ function openWidget(hub, w, idx) {
   const badge = document.getElementById('wpBadge');
   badge.textContent = hub.name;
   badge.style.background = hub.color;
-  document.getElementById('wpCounter').textContent = `${w.num} / 0${hub.widgets.length}`;
+  document.getElementById('wpCounter').textContent = `${String(idx+1).padStart(2,'0')} / ${String(hub.widgets.length).padStart(2,'0')}`;
   document.getElementById('wpName').textContent = w.name;
   document.getElementById('wpOne').textContent = w.one;
   document.getElementById('wpOutput').innerHTML = w.output;
