@@ -3,855 +3,1086 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SpoonStack - The AI Operating System for AuDHD Moms</title>
-<meta name="description" content="SpoonStack helps neurodivergent people manage energy using AI widgets built around spoon theory. Pre-built hubs or build your own.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>SpoonStack — Product Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --coral:#D85A30;--teal:#1D9E75;--purple:#7F77DD;--dusty:#C4797A;
-  --dumpster:#C4427A;--green:#639922;--cyan:#0B8FA6;--pink:#E8399A;
-  --plum:#4A3560;--lime:#97C459;--vault:#2A7A8C;
-  --bg:#FAFAF7;--ink:#2C2C2A;--ink-2:#888780;--ink-3:#B4B2A9;
-  --border:#E8E6E0;--card:#FFFFFF;--yellow:#E8D44D;--mono:#F1EFE8;
+:root{
+  --gold:#DAAF2E;--gold-pale:#FDF4D0;--gold-mid:#F5E098;
+  --cream:#FAF7F0;--paper:#F4EFE4;
+  --ink:#2C2820;--ink-soft:#6B6254;--ink-faint:#B5AA97;
+  --green:#1D9E75;--green-pale:#E8F7F1;
+  --lime-pale:#EEF9D6;--lime:#A3D130;
+  --coral:#D85A30;--coral-pale:#FAECE7;
+  --purple:#8B6FE8;--purple-pale:#EEEAFC;
+  --pink:#C4427A;--pink-pale:#FBEAF0;
+  --cyan:#0B8FA6;--cyan-pale:#E0F5FA;
+  --hot-pink:#E8399A;
+  --plum:#4A3560;--plum-pale:#EDEAF5;
+  --teal:#2A7A8C;--teal-pale:#E0F2F7;
+  --sw:0 2px 12px rgba(44,40,32,.07),0 1px 3px rgba(44,40,32,.06);
+  --sl:0 6px 28px rgba(44,40,32,.12),0 2px 6px rgba(44,40,32,.06);
+  --r:18px;--fs:'DM Sans',sans-serif;--fm:'IBM Plex Mono',monospace;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fs);background:#1A1916;color:var(--ink);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;gap:36px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.03;pointer-events:none;z-index:999}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;transition:background .3s,box-shadow .3s;}
-nav.scrolled{background:rgba(250,250,247,.96);backdrop-filter:blur(8px);box-shadow:0 1px 0 var(--border);}
-.nav-logo{font-size:17px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:7px;text-decoration:none;}
-.nav-links{display:flex;align-items:center;gap:24px;}
-.nav-links a{font-size:13px;color:var(--ink-2);text-decoration:none;transition:color .2s;}
-.nav-links a:hover{color:var(--ink);}
-.nav-cta{background:var(--ink);color:#fff;border:none;border-radius:100px;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .2s;}
-.nav-cta:hover{opacity:.85;}
+/* ── Phone ── */
+.phone{width:390px;height:844px;background:var(--cream);border-radius:52px;border:10px solid #111;box-shadow:0 0 0 2px #3A3732,0 40px 80px rgba(0,0,0,.6);overflow:hidden;display:flex;flex-direction:column;flex-shrink:0}
+.notch{width:120px;height:34px;background:#111;border-radius:0 0 22px 22px;margin:0 auto;flex-shrink:0}
+.pi{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.pi::-webkit-scrollbar{display:none}
 
-/* HERO */
-.hero{min-height:100vh;padding:120px 40px 80px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(circle 400px at 10% 20%,rgba(216,90,48,.07) 0%,transparent 70%),radial-gradient(circle 500px at 90% 15%,rgba(127,119,221,.07) 0%,transparent 70%),radial-gradient(circle 400px at 85% 85%,rgba(29,158,117,.07) 0%,transparent 70%),radial-gradient(circle 350px at 5% 85%,rgba(232,57,154,.07) 0%,transparent 70%);}
-.hero-inner{position:relative;z-index:1;max-width:800px;margin:0 auto;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:28px;font-family:'IBM Plex Mono',monospace;}
-.hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
-.hero h1{font-size:clamp(40px,7vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.025em;margin-bottom:20px;}
-.hero h1 .c1{color:var(--coral);}
-.hero h1 .c2{color:var(--teal);}
-.hero-sub{font-size:clamp(16px,2.2vw,20px);color:var(--ink-2);max-width:560px;margin:0 auto 36px;line-height:1.55;}
-.hero-sub strong{color:var(--ink);font-weight:600;}
-.waitlist-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;}
-.waitlist-form input{background:var(--card);border:1.5px solid var(--border);border-radius:100px;padding:13px 22px;font-size:15px;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;width:280px;transition:border-color .2s;}
-.waitlist-form input:focus{border-color:var(--coral);}
-.waitlist-form button{background:var(--coral);color:#fff;border:none;border-radius:100px;padding:13px 28px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:transform .15s,opacity .15s;white-space:nowrap;}
-.waitlist-form button:hover{transform:translateY(-1px);opacity:.92;}
-.hero-note{font-size:12px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;}
-.hero-note span{color:var(--teal);font-weight:600;}
-.hub-strip{display:flex;gap:6px;justify-content:center;margin-top:48px;flex-wrap:wrap;}
-.hub-pip{width:32px;height:6px;border-radius:3px;transition:transform .2s;cursor:default;}
-.hub-pip:hover{transform:scaleY(2.5);}
-.success-msg{display:none;background:var(--teal);color:#fff;border-radius:100px;padding:13px 28px;font-size:15px;font-weight:700;}
+/* ── Sidebar ── */
+.snav{display:flex;flex-direction:column;gap:2px;padding-top:8px;position:sticky;top:0;min-width:140px}
+.snav-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin:10px 0 4px 6px}
+.sb{font-size:11px;padding:6px 10px;border-radius:7px;color:rgba(255,255,255,.4);cursor:pointer;transition:all .15s;font-family:var(--fm);letter-spacing:.02em;border:none;background:transparent;text-align:left;width:100%}
+.sb:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.7)}
+.sb.on{background:rgba(218,175,46,.15);color:var(--gold)}
 
-/* SPOONY BANNER */
-.spoony-banner{background:#FEF2F2;border-top:1px solid #FECACA;border-bottom:1px solid #FECACA;padding:20px 40px;text-align:center;}
-.spoony-banner p{font-size:15px;color:#7F1D1D;max-width:700px;margin:0 auto;}
-.spoony-banner strong{font-weight:700;}
+/* ── Screens ── */
+.sc{display:none;flex-direction:column;min-height:100%;animation:fi .3s ease}
+.sc.on{display:flex}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* SECTIONS */
-.section{padding:88px 40px;}
-.section-inner{max-width:1060px;margin:0 auto;}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);font-family:'IBM Plex Mono',monospace;margin-bottom:10px;}
-.section h2{font-size:clamp(26px,4vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px;}
-.section-desc{font-size:17px;color:var(--ink-2);max-width:580px;line-height:1.6;margin-bottom:48px;}
+/* ── Toast ── */
+.toast{position:fixed;bottom:50px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--ink);color:#fff;font-family:var(--fm);font-size:11px;letter-spacing:.06em;padding:10px 18px;border-radius:100px;opacity:0;transition:all .3s;pointer-events:none;z-index:500;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ══════════════════════════════════
-   SECTION 1: LIVE HUB DEMO
-══════════════════════════════════ */
-.demo-section{background:#F1EFE8;padding:88px 40px;}
-.demo-wrap{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start;max-width:1060px;margin:0 auto;}
+/* ── Modal overlay ── */
+.modal{display:none;position:absolute;inset:0;background:rgba(44,40,32,.5);z-index:200;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.modal-card{background:#FFFDF7;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:70%;overflow-y:auto}
+.modal-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.modal-sub{font-size:11px;color:var(--ink-soft);margin-bottom:14px;line-height:1.4}
+.modal-close{float:right;background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-soft);margin-top:-4px}
+.modal-item{font-size:12px;color:var(--ink);padding:8px 0;border-bottom:.5px solid rgba(44,40,32,.06);line-height:1.4;cursor:pointer}
+.modal-item:hover{color:var(--gold)}
+.modal-item:last-child{border-bottom:none}
+.modal-textarea{width:100%;border:1px solid rgba(44,40,32,.12);border-radius:10px;padding:10px 12px;font-size:12px;font-family:var(--fs);color:var(--ink);outline:none;resize:none;background:#FFFDF7;min-height:80px;margin-bottom:10px}
+.modal-textarea:focus{border-color:var(--gold)}
 
-/* Hub selector sidebar */
-.hub-selector{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.hub-selector-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;padding:14px 16px 10px;border-bottom:1px solid var(--border);}
-.hub-btn{display:flex;align-items:center;gap:10px;width:100%;padding:11px 16px;border:none;background:transparent;text-align:left;cursor:pointer;transition:background .15s;border-left:3px solid transparent;}
-.hub-btn:hover{background:var(--bg);}
-.hub-btn.active{background:var(--bg);}
-.hub-btn-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.hub-btn-name{font-size:13px;font-weight:600;color:var(--ink);}
+/* ── Top bar ── */
+.tb{background:#FFFDF7;border-bottom:.5px solid rgba(44,40,32,.08);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tbl{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.tbn{display:flex;gap:2px;background:var(--paper);border-radius:100px;padding:2px}
+.tp{font-size:9px;font-weight:500;padding:4px 9px;border-radius:100px;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.tp.on{background:var(--ink);color:#fff}
+.tw{font-family:var(--fm);font-size:9px;color:var(--ink-faint)}
 
-/* Active hub display */
-.hub-display{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
-.hub-display-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);}
-.hub-display-accent{height:5px;margin:-20px -24px 16px;margin-bottom:16px;}
-.hub-display-badge{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:3px 12px;font-size:11px;font-weight:700;color:#fff;margin-bottom:8px;}
-.hub-display-name{font-size:22px;font-weight:800;margin-bottom:4px;}
-.hub-display-desc{font-size:13px;color:var(--ink-2);}
-.widgets-grid{padding:16px 24px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
-.widget-thumb{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;}
-.widget-thumb::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.widget-thumb:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
-.widget-thumb.active{box-shadow:0 0 0 2px var(--hub-color,#D85A30);background:var(--card);}
-.wt-num{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--ink-3);margin-bottom:4px;}
-.wt-name{font-size:13px;font-weight:700;margin-bottom:3px;line-height:1.2;}
-.wt-one{font-size:11px;color:var(--ink-2);line-height:1.4;}
+/* ── Cards ── */
+.card{background:#FFFDF7;border-radius:var(--r);box-shadow:var(--sw);overflow:hidden;margin-bottom:10px;transition:box-shadow .2s,transform .2s;animation:fu .4s ease both}
+.card:hover{box-shadow:var(--sl);transform:translateY(-1px)}
+.cb{height:5px;position:relative}
+.cb::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3) 60%,transparent)}
+.cbody{padding:13px 15px 15px}
+.ct{font-size:13px;font-weight:600;color:var(--ink);letter-spacing:-.01em;margin-bottom:2px}
+.cs{font-size:11px;color:var(--ink-soft);margin-bottom:10px;line-height:1.4}
 
-/* Widget expanded panel */
-.widget-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-top:16px;display:none;}
-.widget-panel.open{display:block;}
-.wp-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
-.wp-badge{border-radius:100px;padding:3px 11px;font-size:10px;font-weight:700;color:#fff;}
-.wp-counter{font-size:11px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;}
-.wp-name{font-size:20px;font-weight:800;padding:12px 20px 4px;}
-.wp-one{font-size:13px;color:var(--ink-2);padding:0 20px 14px;}
-.wp-content{padding:0 20px;display:grid;grid-template-columns:1fr 150px;gap:16px;align-items:start;}
-.wp-output{background:var(--bg);border:.5px solid var(--border);border-radius:10px;padding:13px 15px;}
-.wp-ol{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;margin-bottom:9px;}
-.wp-btns{display:flex;flex-direction:column;gap:7px;padding-top:16px;}
-.wpb{border-radius:100px;padding:8px 13px;font-size:12px;font-weight:600;border:.5px solid var(--border);background:var(--card);cursor:pointer;text-align:left;color:var(--ink);width:100%;}
-.wpb.p{color:#fff;border:none;}
-.wp-prompt{margin:14px 20px 20px;background:var(--mono);border:.5px solid var(--border);border-radius:8px;padding:10px 14px;}
-.wpl{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;margin-bottom:4px;}
-.wpt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-2);line-height:1.7;}
+/* ── Inputs ── */
+.well{background:var(--paper);border-radius:12px;padding:16px;margin-bottom:10px;border:1px solid rgba(218,175,46,.12);text-align:center}
+.wi{font-size:22px;margin-bottom:6px;display:block}
+.wt{font-size:12px;color:var(--ink-soft);line-height:1.5}
+.bbox{border:1.5px dashed rgba(218,175,46,.4);border-radius:10px;padding:9px 11px;margin-bottom:10px;background:rgba(218,175,46,.03)}
+.bbl{font-family:var(--fm);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.bbl::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.6;display:inline-block}
+.bi{font-size:11px;color:var(--ink);line-height:1.5}
+.ta{width:100%;border:1px solid rgba(44,40,32,.12);border-radius:10px;padding:9px 12px;font-size:12px;font-family:var(--fs);color:var(--ink);outline:none;resize:none;background:#FFFDF7;min-height:60px;margin-bottom:8px}
+.ta:focus{border-color:var(--gold)}
 
-/* ══════════════════════════════════
-   SECTION 2: HUB BUILDER
-══════════════════════════════════ */
-.builder-section{background:var(--bg);padding:88px 40px;}
-.builder-wrap{max-width:1060px;margin:0 auto;}
-.builder-ui{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start;margin-top:40px;}
+/* ── Buttons ── */
+.btn{display:block;width:100%;padding:11px 0;border-radius:100px;border:none;font-size:10px;font-family:var(--fm);font-weight:500;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:scale(.98)}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.pill{font-size:10px;padding:5px 10px;border-radius:100px;border:1px solid rgba(44,40,32,.13);background:transparent;color:var(--ink-soft);cursor:pointer;font-family:var(--fs);transition:all .15s}
+.pill:hover{border-color:var(--gold);color:var(--ink);background:var(--gold-pale)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:10px}
+.chip{font-size:11px;padding:5px 11px;border-radius:100px;border:1px solid rgba(44,40,32,.12);background:#FFFDF7;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.chip:hover,.chip.on{border-color:var(--gold);background:var(--gold-pale);color:var(--ink)}
 
-.widget-library{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;max-height:520px;display:flex;flex-direction:column;}
-.lib-title{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;padding:14px 16px 10px;border-bottom:1px solid var(--border);flex-shrink:0;}
-.lib-scroll{overflow-y:auto;flex:1;}
-.lib-hub-group{border-bottom:1px solid var(--border);}
-.lib-hub-label{padding:8px 14px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:7px;}
-.lib-hub-label .lhl-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);}
-.lib-widget{padding:8px 14px;font-size:12px;color:var(--ink-2);cursor:grab;display:flex;align-items:center;gap:8px;transition:background .15s;user-select:none;}
-.lib-widget:hover{background:var(--bg);color:var(--ink);}
-.lib-widget:active{cursor:grabbing;}
-.drag-handle{font-size:10px;color:var(--ink-3);}
+/* ── Bubbles ── */
+.blbl{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:6px}
+.bubble{padding:11px 13px;border-radius:13px 13px 13px 3px;font-size:12px;line-height:1.55;color:#fff;margin-bottom:8px}
 
-/* Drop zone */
-.hub-canvas{background:var(--card);border:2px dashed var(--border);border-radius:14px;min-height:480px;padding:20px;transition:border-color .2s,background .2s;}
-.hub-canvas.dragover{border-color:var(--coral);background:#FEF9F7;}
-.hub-canvas-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
-.hub-name-input{font-size:20px;font-weight:800;border:none;background:transparent;color:var(--ink);outline:none;width:200px;}
-.hub-name-input::placeholder{color:var(--ink-3);}
-.hub-save-btn{background:var(--green);color:#fff;border:none;border-radius:100px;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;opacity:0;transition:opacity .3s;}
-.hub-save-btn.show{opacity:1;}
-.hub-drop-hint{text-align:center;padding:60px 20px;color:var(--ink-3);}
-.hub-drop-hint .hint-icon{font-size:40px;margin-bottom:14px;}
-.hub-drop-hint p{font-size:14px;line-height:1.6;}
-.hub-drop-hint strong{color:var(--ink-2);}
-.dropped-widgets{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
-.dropped-widget{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px;position:relative;animation:dropIn .3s ease;}
-@keyframes dropIn{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.dw-accent{height:3px;border-radius:1.5px;margin-bottom:8px;}
-.dw-hub{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;}
-.dw-name{font-size:12px;font-weight:700;line-height:1.2;margin-bottom:2px;}
-.dw-one{font-size:10.5px;color:var(--ink-2);line-height:1.4;}
-.dw-remove{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--ink-3);cursor:pointer;font-size:14px;padding:0;line-height:1;transition:color .15s;}
-.dw-remove:hover{color:#DC2626;}
+/* ── Script box ── */
+.slbl{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+.sbox{background:var(--lime-pale);border-left:3px solid var(--lime);border-radius:0 10px 10px 0;padding:10px 12px;font-size:12px;line-height:1.55;color:var(--ink);margin-bottom:5px;font-style:italic}
+.sfall{font-size:10px;color:var(--ink-soft);font-style:italic;margin-bottom:10px;line-height:1.4}
 
-/* ══════════════════════════════════
-   SECTION 3: COMMUNITY STACKS
-══════════════════════════════════ */
-.community-section{background:#F1EFE8;padding:88px 40px;}
-.stacks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:40px;}
-.stack-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
-.stack-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.08);}
-.sc-header{padding:16px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
-.sc-info{}
-.sc-tag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:100px;padding:2px 10px;margin-bottom:8px;display:inline-block;}
-.sc-name{font-size:17px;font-weight:800;margin-bottom:3px;}
-.sc-author{font-size:11px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;}
-.sc-widgets{padding:0 20px 16px;display:flex;gap:6px;flex-wrap:wrap;}
-.sc-widget-pill{font-size:11px;color:var(--ink-2);background:var(--bg);border:1px solid var(--border);border-radius:100px;padding:3px 10px;}
-.sc-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.sc-forks{font-size:12px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;}
-.sc-fork-btn{background:var(--ink);color:#fff;border:none;border-radius:100px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .2s;}
-.sc-fork-btn:hover{opacity:.85;}
-.sc-fork-btn.forked{background:var(--teal);}
+/* ── Options ── */
+.opts{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt{border:1px solid rgba(44,40,32,.1);border-radius:12px;padding:9px 11px;cursor:pointer;transition:all .15s;background:transparent}
+.opt:hover{border-color:var(--gold);background:var(--gold-pale)}
+.opt.rec{border-color:var(--gold);background:var(--gold-pale)}
+.on{font-size:11px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.ons{font-size:10px;color:var(--ink-soft);line-height:1.35}
 
-/* FINAL CTA */
-.cta-section{padding:100px 40px;text-align:center;background:var(--bg);}
-.cta-inner{max-width:580px;margin:0 auto;}
-.cta-section h2{font-size:clamp(28px,5vw,46px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px;}
-.cta-section p{font-size:18px;color:var(--ink-2);margin-bottom:36px;line-height:1.55;}
+/* ── Done card ── */
+.done-card{background:#FFFDF7;border-radius:var(--r);box-shadow:var(--sw);margin-bottom:8px;overflow:hidden;animation:fu .3s ease}
+.done-bar{height:5px;background:var(--green)}
+.done-body{padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+.done-t{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:1px}
+.done-m{font-family:var(--fm);font-size:8px;color:var(--ink-faint)}
+.done-ck{width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 
-/* FOOTER */
-footer{background:var(--ink);padding:40px;text-align:center;}
-.footer-logo{font-size:18px;font-weight:800;color:#fff;margin-bottom:6px;}
-.footer-sub{font-size:11px;color:rgba(255,255,255,.3);font-family:'IBM Plex Mono',monospace;}
-.footer-links{display:flex;justify-content:center;gap:22px;margin-top:18px;}
-.footer-links a{font-size:12px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;}
-.footer-links a:hover{color:rgba(255,255,255,.7);}
+/* ── Loading ── */
+.ldots{display:flex;gap:5px;justify-content:center;margin:16px 0 8px}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:bounce 1.2s ease infinite}
+.ldot:nth-child(2){animation-delay:.15s}
+.ldot:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.ltxt{font-family:var(--fm);font-size:9px;color:var(--ink-faint);text-align:center;letter-spacing:.06em}
 
-/* FADE IN */
-.fade-in{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
-.fade-in.visible{opacity:1;transform:translateY(0);}
+/* ── Anchor / clock ── */
+.anch{padding:12px 16px 10px}
+.at{font-size:34px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1}
+.at-ampm{font-size:13px;font-weight:400;color:var(--ink-faint);margin-left:2px}
+.ar{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.adate{font-family:var(--fm);font-size:8px;color:var(--ink-faint);letter-spacing:.06em;text-transform:uppercase}
+.bps{display:flex;gap:3px}
+.bp{font-family:var(--fm);font-size:8px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:100px;border:.5px solid rgba(44,40,32,.12);background:transparent;color:var(--ink-faint);cursor:pointer;transition:all .15s}
+.bp.on{background:var(--gold);color:var(--ink);border-color:transparent}
 
-@media(max-width:768px){
-  nav{padding:12px 20px;}
-  .nav-links{display:none;}
-  .hero{padding:100px 24px 60px;}
-  .section,.demo-section,.builder-section,.community-section,.cta-section{padding:60px 24px;}
-  .demo-wrap,.builder-ui{grid-template-columns:1fr;}
-  .hub-selector{display:none;}
-  .wp-content{grid-template-columns:1fr;}
-  footer{padding:28px 20px;}
-  .waitlist-form{flex-direction:column;align-items:center;}
-  .waitlist-form input{width:100%;max-width:320px;}
-}
+/* ── Greeting ── */
+.greet{background:#FFFDF7;border-radius:var(--r);box-shadow:var(--sw);margin-bottom:10px;overflow:hidden}
+.gb{height:5px}
+.gc{padding:12px 14px}
+.gt{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px}
+.gs{font-size:10px;color:var(--ink-soft);line-height:1.5}
+
+/* ── App body ── */
+.ab{padding:12px 14px 40px;flex:1}
+
+/* ── Onboarding ── */
+.ob{padding:24px 20px 32px;background:var(--cream);flex:1}
+.ost{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.oq{font-size:20px;font-weight:600;color:var(--ink);letter-spacing:-.02em;line-height:1.2;margin-bottom:5px}
+.osub{font-size:12px;color:var(--ink-soft);margin-bottom:20px;line-height:1.45}
+.sdots{display:flex;gap:4px;margin-bottom:20px}
+.sd{height:3px;border-radius:2px;flex:1;background:rgba(44,40,32,.1)}
+.sd.d{background:var(--gold)}
+.sd.c{background:var(--gold);opacity:.5}
+.ccs{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.cc{border:1.5px solid rgba(44,40,32,.1);border-radius:13px;padding:12px 14px;cursor:pointer;display:flex;align-items:flex-start;gap:11px;background:#FFFDF7;transition:all .2s}
+.cc:hover,.cc.on{border-color:var(--gold);background:var(--gold-pale)}
+.ccl{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.ccd{font-size:10px;color:var(--ink-soft);line-height:1.4}
+
+/* ── Ready screen ── */
+.ready{padding:32px 24px;background:var(--cream);align-items:center;text-align:center;justify-content:center;flex:1}
+.sorb{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 0 0 8px var(--green-pale);animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+.rtl{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px;line-height:1.2}
+.rsb{font-family:var(--fm);font-size:9px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px}
+.mc{background:#FFFDF7;border-radius:11px;overflow:hidden;margin-bottom:7px;text-align:left;width:100%;animation:fu .4s ease both;box-shadow:var(--sw)}
+.mcb{height:3px;background:var(--gold)}
+.mci{padding:7px 11px}
+.mct{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:1px}
+.mcs{font-size:9px;color:var(--ink-soft);line-height:1.35}
+
+/* ── Shelf ── */
+.shelf-search{width:100%;border:1px solid rgba(44,40,32,.1);border-radius:10px;padding:8px 12px;font-size:11px;background:#FFFDF7;color:var(--ink);outline:none;font-family:var(--fs);margin-bottom:12px}
+.sfps{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.sfp{font-size:9px;padding:4px 9px;border-radius:100px;border:1px solid rgba(44,40,32,.1);background:transparent;color:var(--ink-soft);cursor:pointer;font-family:var(--fm);letter-spacing:.04em;transition:all .15s}
+.sfp:hover,.sfp.on{color:var(--ink)}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.scard{background:#FFFDF7;border-radius:13px;overflow:hidden;box-shadow:var(--sw);cursor:pointer;transition:all .2s}
+.scard:hover{transform:translateY(-2px);box-shadow:var(--sl)}
+.sc-bar{height:4px}
+.sc-body{padding:10px 11px}
+.sc-st{font-family:var(--fm);font-size:7px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.sc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.sc-icon{font-size:18px;margin-bottom:3px;display:block}
+.sc-name{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.2}
+.sc-one{font-size:9px;color:var(--ink-soft);line-height:1.35}
+.stk{background:#FFFDF7;border-radius:13px;overflow:hidden;box-shadow:var(--sw);margin-bottom:8px;cursor:pointer;transition:all .2s}
+.stk:hover{transform:translateY(-1px);box-shadow:var(--sl)}
+.stk-bar{height:4px}
+.stk-row{padding:10px 13px;display:flex;align-items:center;gap:9px}
+.stk-orb{width:26px;height:26px;border-radius:50%;flex-shrink:0}
+.stk-name{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:1px}
+.stk-desc{font-size:10px;color:var(--ink-soft)}
+.stk-ct{font-family:var(--fm);font-size:8px;color:var(--ink-faint);margin-left:auto}
+
+/* ── Brain ── */
+.brain-side{background:#1A1916;padding:12px;flex-shrink:0;width:108px;overflow-y:auto}
+.brain-logo{font-size:12px;font-weight:700;color:#fff;letter-spacing:-.01em;margin-bottom:12px}
+.dom{display:flex;align-items:center;gap:7px;padding:6px 7px;border-radius:9px;cursor:pointer;transition:all .15s;margin-bottom:1px}
+.dom:hover{background:rgba(255,255,255,.06)}
+.dom.on{background:rgba(29,158,117,.15)}
+.dom-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dom-name{font-size:10px;color:rgba(255,255,255,.7);font-weight:500}
+.dom-ct{font-family:var(--fm);font-size:8px;color:rgba(255,255,255,.3);margin-left:auto}
+.brain-main{flex:1;padding:13px;background:var(--cream);overflow-y:auto}
+.be{background:#FFFDF7;border-radius:11px;padding:10px 12px;margin-bottom:7px;box-shadow:var(--sw)}
+.be-dom{font-family:var(--fm);font-size:8px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.be-text{font-size:11px;color:var(--ink);line-height:1.5}
+.be-date{font-family:var(--fm);font-size:8px;color:var(--ink-faint);margin-top:4px}
+
+/* ── Wiki ── */
+.wiki-side{background:#FFFDF7;border-right:.5px solid rgba(44,40,32,.08);padding:12px;width:108px;flex-shrink:0;overflow-y:auto}
+.wp{display:flex;align-items:center;gap:7px;padding:6px 7px;border-radius:9px;cursor:pointer;transition:all .15s;margin-bottom:2px}
+.wp:hover{background:var(--paper)}
+.wp.on{background:var(--gold-pale)}
+.wpa{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.wpn{font-size:10px;font-weight:500;color:var(--ink)}
+.wiki-main{flex:1;padding:13px;background:var(--cream);overflow-y:auto}
+.wph{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.wpa-lg{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.wpname{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.wpmeta{font-size:10px;color:var(--ink-soft)}
+.wtabs{display:flex;gap:2px;background:var(--paper);border-radius:100px;padding:2px;margin-bottom:12px}
+.wt{font-size:9px;font-weight:500;padding:4px 9px;border-radius:100px;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.wt.on{background:#FFFDF7;color:var(--ink);box-shadow:var(--sw)}
+.ws-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;margin-top:10px}
+.ws-item{font-size:11px;color:var(--ink);padding:3px 0;line-height:1.4;border-bottom:.5px solid rgba(44,40,32,.06)}
+.ws-item:last-child{border-bottom:none}
+.wtag{font-size:9px;padding:2px 7px;border-radius:100px;display:inline-block;margin-right:3px;margin-bottom:3px}
+
+/* ── Inbox ── */
+.iitem{background:#FFFDF7;border-radius:12px;padding:10px 12px;margin-bottom:7px;box-shadow:var(--sw)}
+.ihdr{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ityp{font-family:var(--fm);font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:var(--cyan-pale);color:var(--cyan)}
+.itime{font-family:var(--fm);font-size:8px;color:var(--ink-faint);margin-left:auto}
+.itxt{font-size:11px;color:var(--ink);line-height:1.5;margin-bottom:7px}
+.ipills{display:flex;gap:5px;flex-wrap:wrap}
+.ip{font-size:9px;padding:3px 8px;border-radius:100px;border:1px solid rgba(44,40,32,.1);color:var(--ink-soft);cursor:pointer;transition:all .15s}
+.ip:hover{border-color:var(--gold);color:var(--ink)}
+.ip.p{background:var(--green);color:#fff;border-color:transparent}
+
+/* ── Done strip / aha ── */
+.ds{background:#FFFDF7;border-radius:var(--r);padding:12px 14px;box-shadow:var(--sw);margin-bottom:8px}
+.ds-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:7px}
+.ds-row{display:flex;align-items:center;gap:7px;padding:3px 0;font-size:11px;color:var(--ink)}
+.ds-ck{width:13px;height:13px;border-radius:50%;background:var(--green-pale);color:var(--green);font-size:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ds-t{font-family:var(--fm);font-size:8px;color:var(--ink-faint);margin-left:auto}
+.cu-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:8px 0 5px}
+.cu-row{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);margin-bottom:3px}
+.cu-t{font-family:var(--fm);font-size:9px;color:var(--gold);font-weight:500;min-width:40px}
+.fin{background:var(--gold-pale);border:1px solid rgba(218,175,46,.2);border-radius:var(--r);padding:16px;text-align:center;margin-bottom:10px}
+.fin-t{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;letter-spacing:-.01em}
+.back{font-family:var(--fm);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);background:transparent;border:none;cursor:pointer;padding:8px 0;display:block;margin-bottom:4px}
+.back:hover{color:var(--ink)}
+.sec-lbl{font-family:var(--fm);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:14px 0 8px}
 </style>
 </head>
 <body>
 
-<nav id="nav">
-  <a href="#" class="nav-logo">SpoonStack</a>
-  <div class="nav-links">
-    <a href="#demo">Try a stack</a>
-    <a href="#builder">Build your own stack</a>
-    <a href="#community">Community stacks</a>
-    <a href="#waitlist">Join waitlist</a>
-  </div>
-  <a href="https://spoonstackapp.vercel.app" target="_blank" class="nav-cta" style="background:var(--teal);">Try the app free →</a>
-</nav>
+<div class="toast" id="toast"></div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-inner">
-    <div class="hero-badge"><span class="dot"></span>Built for the community Spoony left behind</div>
-    <h1>Your brain runs on <span class="c1">spoons.</span><br>Now your phone does <span class="c2">too.</span></h1>
-    <p class="hero-sub" style="font-size:clamp(18px,2.5vw,22px);font-weight:600;color:var(--ink);">For brains that work differently and lives that don't slow down.</p>
-    <p class="hero-sub" style="margin-top:10px;">SpoonStack is your house manager, social translator, and chief of staff — covering the cost of every neurotypical thing your brain has to work harder to do, so your actual superpowers have room to show up.</p>
-    <div style="margin-bottom:28px;">
-      <span style="font-size:clamp(22px,3.5vw,32px);font-weight:800;color:var(--teal);">You just decide.</span>
-    </div>
-    <div class="waitlist-form" id="waitlist">
-      <input type="email" id="email-1" placeholder="your@email.com">
-      <button onclick="join(1)">Join the waitlist →</button>
-    </div>
-    <div class="success-msg" id="ok-1">You're on the list!</div>
-    <p class="hero-note" style="margin-top:12px;">No spam · <span>Stack Your Spoons</span> ebook drops to waitlist first</p>
-    <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);display:flex;flex-direction:column;align-items:center;gap:10px;">
-      <a href="https://spoonstackapp.vercel.app" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:var(--teal);color:#fff;border-radius:100px;padding:14px 32px;font-size:16px;font-weight:700;text-decoration:none;transition:transform .15s,opacity .15s;" onmouseover="this.style.opacity='.9';this.style.transform='translateY(-1px)'" onmouseout="this.style.opacity='1';this.style.transform='translateY(0)'">
-        Try the app free - no account needed
-      </a>
-      <p style="font-size:12px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace;">Live now · works in your browser · opens on iPhone</p>
-    </div>
-    <div class="hub-strip">
-      <div class="hub-pip" style="background:#DAAF2E"></div><div class="hub-pip" style="background:#1D9E75"></div>
-      <div class="hub-pip" style="background:#8B6FE8"></div><div class="hub-pip" style="background:#D85A30"></div>
-      <div class="hub-pip" style="background:#C4427A"></div><div class="hub-pip" style="background:#A3D130"></div>
-      <div class="hub-pip" style="background:#0B8FA6"></div><div class="hub-pip" style="background:#E8399A"></div>
-      <div class="hub-pip" style="background:#4A3560"></div><div class="hub-pip" style="background:#97C459"></div>
-      <div class="hub-pip" style="background:#2A7A8C"></div>
-    </div>
-  </div>
-</section>
-
-<!-- SPOONY -->
-<div class="spoony-banner">
-  <p>🚨 <strong>Spoony is shutting down May 31, 2026.</strong> 65,000 spoonies need a new home. SpoonStack is what Spoony couldn't be - adaptive, AI-powered, and built for neurodivergent brains.</p>
+<!-- ── Sidebar ── -->
+<div class="snav">
+  <div class="snav-lbl">Onboarding</div>
+  <button class="sb on" onclick="go(1)">Welcome</button>
+  <button class="sb" onclick="go(2)">What brings you</button>
+  <button class="sb" onclick="go(3)">Your people</button>
+  <button class="sb" onclick="go(4)">One hard thing</button>
+  <button class="sb" onclick="go(5)">Stack ready</button>
+  <div class="snav-lbl">SpoonStack</div>
+  <button class="sb" onclick="go(6)">Morning stack</button>
+  <button class="sb" onclick="go(7)">One Hard Thing</button>
+  <button class="sb" onclick="go(8)">Dinner Decider</button>
+  <button class="sb" onclick="go(9)">Partner Briefing</button>
+  <button class="sb" onclick="go(10)">Aha moment</button>
+  <div class="snav-lbl">Explore</div>
+  <button class="sb" onclick="go(11)">The Shelf</button>
+  <button class="sb" onclick="go(12)">The Brain</button>
+  <button class="sb" onclick="go(13)">Wiki</button>
+  <button class="sb" onclick="go(14)">Brain Inbox</button>
 </div>
 
-<!-- SPOON THEORY EXPLAINER -->
-<section style="background:var(--mono);padding:56px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div style="max-width:760px;margin:0 auto;text-align:center;">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-family:'IBM Plex Mono',monospace;margin-bottom:14px;">Built on spoon theory</div>
-    <p style="font-size:clamp(15px,2vw,18px);color:var(--ink-2);line-height:1.6;font-weight:400;margin-bottom:16px;">Spoon theory was created by Christine Miserandino to describe living with chronic illness. It turned out to describe a lot of other brains too.</p>
-    <p style="font-size:clamp(17px,2.3vw,22px);color:var(--ink);line-height:1.6;font-weight:600;margin-bottom:20px;">Neurodivergent people start each day with a limited pool of energy. Different tasks cost different amounts. Neurotypical people don't count spoons because they never run out.</p>
-    <p style="font-size:clamp(17px,2.3vw,22px);color:var(--ink);line-height:1.6;font-weight:600;margin-bottom:28px;">We count because we have to.</p>
-    <div style="background:var(--yellow);border-radius:12px;padding:20px 28px;display:inline-block;max-width:680px;">
-      <p style="font-size:clamp(16px,2vw,20px);font-weight:800;color:#3D3000;line-height:1.5;">The hard stuff still costs spoons.<br>The overhead shouldn't.</p>
-    </div>
-  </div>
-</section>
+<!-- ── Phone ── -->
+<div class="phone" style="position:relative">
+  <div class="notch"></div>
+  <div class="pi" id="pi">
 
-<!-- HOW IT ACTUALLY WORKS - philosophy -->
-<section style="background:var(--bg);padding:72px 40px;">
-  <div style="max-width:1060px;margin:0 auto;">
-    <div class="eyebrow fade-in" style="text-align:center;">What it actually does</div>
-    <h2 class="fade-in" style="font-size:clamp(24px,4vw,40px);margin-bottom:14px;text-align:center;">Covers the neurotypical tax.<br>So you stop paying it.</h2>
-    <p class="fade-in" style="font-size:17px;color:var(--ink-2);line-height:1.65;max-width:640px;margin:0 auto 48px;text-align:center;">Your brain is spending real energy just to attempt things that come automatically to neurotypical people. Every email that has to sound a certain way. Every call you have to psyche yourself up for. Every form, permission slip, and group chat. SpoonStack covers that cost. Human-led, AI-assisted — always.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
-      <div class="fade-in" style="background:var(--card);border:1px solid var(--border);border-top:4px solid var(--teal);border-radius:12px;padding:24px 26px;">
-        <div style="font-size:22px;margin-bottom:12px;">🧭</div>
-        <div style="font-size:16px;font-weight:700;margin-bottom:8px;">Social translator</div>
-        <div style="font-size:14px;color:var(--ink-2);line-height:1.65;">For the autistic brain that processes social situations differently. Is this text passive aggressive? Did I say something weird? What do I say to the teacher without it coming out wrong? SpoonStack reads the room so you don't have to guess.</div>
+    <!-- ══ 1. WELCOME ══ -->
+    <div class="sc on" id="s1" style="background:var(--cream);padding:48px 28px 36px;align-items:center;text-align:center;justify-content:space-between;min-height:100%">
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 10px var(--gold-mid),0 0 0 18px rgba(218,175,46,.12);margin:0 auto 24px;animation:pulse-orb 3s ease infinite"></div>
+      <style>@keyframes pulse-orb{0%,100%{box-shadow:0 0 0 10px var(--gold-mid),0 0 0 18px rgba(218,175,46,.12)}50%{box-shadow:0 0 0 14px var(--gold-mid),0 0 0 24px rgba(218,175,46,.06)}}</style>
+      <div style="font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">SpoonStack</div>
+      <div style="font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.03em;line-height:1.1;margin-bottom:12px">AI built for your brain.<br>Not everyone else's.</div>
+      <div style="font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:28px">Takes <strong style="color:var(--ink)">2 minutes</strong> to set up. Gets smarter every day.</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:32px;text-align:left;width:100%">
+        <div style="display:flex;gap:8px;font-size:12px;color:var(--ink-soft);line-height:1.4"><div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0"></div>Scripts the phone call you've been avoiding for weeks</div>
+        <div style="display:flex;gap:8px;font-size:12px;color:var(--ink-soft);line-height:1.4"><div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0"></div>Knows your kids' safe foods before you ask</div>
+        <div style="display:flex;gap:8px;font-size:12px;color:var(--ink-soft);line-height:1.4"><div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0"></div>Collapses to survival mode on hard days</div>
+        <div style="display:flex;gap:8px;font-size:12px;color:var(--ink-soft);line-height:1.4"><div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:5px;flex-shrink:0"></div>Tells you if that text was actually passive aggressive</div>
       </div>
-      <div class="fade-in" style="background:var(--card);border:1px solid var(--border);border-top:4px solid var(--coral);border-radius:12px;padding:24px 26px;">
-        <div style="font-size:22px;margin-bottom:12px;">⚡</div>
-        <div style="font-size:16px;font-weight:700;margin-bottom:8px;">Executive function bridge</div>
-        <div style="font-size:14px;color:var(--ink-2);line-height:1.65;">For the ADHD brain that has the ideas, the passion, and the vision — but loses the thread between thinking and doing. SpoonStack handles the gap. The first step is there. The words are written. The thing stuck in your head is on the screen.</div>
+      <button class="btn" style="background:var(--gold);color:var(--ink)" onclick="go(2)">Let's go →</button>
+    </div>
+
+    <!-- ══ 2. WHAT BRINGS YOU ══ -->
+    <div class="sc" id="s2">
+      <div class="ob">
+        <div class="sdots"><div class="sd d"></div><div class="sd c"></div><div class="sd"></div><div class="sd"></div></div>
+        <div class="ost">Step 1 of 4</div>
+        <div class="oq">What brings you here?</div>
+        <div class="osub">Pick the one that feels most like right now.</div>
+        <div class="ccs">
+          <div class="cc on" onclick="go(3)"><div style="font-size:20px;flex-shrink:0">☀️</div><div><div class="ccl">Morning chaos</div><div class="ccd">I need help starting the day and getting everyone out the door</div></div></div>
+          <div class="cc" onclick="go(3)"><div style="font-size:20px;flex-shrink:0">🌊</div><div><div class="ccl">Hard days</div><div class="ccd">I need a survival mode when everything falls apart</div></div></div>
+          <div class="cc" onclick="go(3)"><div style="font-size:20px;flex-shrink:0">💗</div><div><div class="ccl">Staying connected</div><div class="ccd">I keep losing track of the people I care about</div></div></div>
+        </div>
+        <button class="btn" style="background:var(--gold);color:var(--ink)" onclick="go(3)">That's me →</button>
       </div>
-      <div class="fade-in" style="background:var(--card);border:1px solid var(--border);border-top:4px solid var(--purple);border-radius:12px;padding:24px 26px;">
-        <div style="font-size:22px;margin-bottom:12px;">🏠</div>
-        <div style="font-size:16px;font-weight:700;margin-bottom:8px;">House manager</div>
-        <div style="font-size:14px;color:var(--ink-2);line-height:1.65;">For the mom running a household like a small business with no staff, no training, and no days off. Meal plans, kid schedules, IEP prep, partner briefings, group chats. SpoonStack is the chief of staff you never had.</div>
+    </div>
+
+    <!-- ══ 3. YOUR PEOPLE ══ -->
+    <div class="sc" id="s3">
+      <div class="ob">
+        <div class="sdots"><div class="sd d"></div><div class="sd d"></div><div class="sd c"></div><div class="sd"></div></div>
+        <div class="ost">Step 2 of 4</div>
+        <div class="oq">Who's in your house?</div>
+        <div class="osub">Add anyone who matters to your day.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px" id="people-chips">
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--hot-pink);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">Y</div>You</div>
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--purple);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">P</div>Partner</div>
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--cyan);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">Z</div>Zoe</div>
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--lime);color:var(--ink);font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">M</div>Marcus</div>
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--coral);color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">P</div>Priya</div>
+          <div style="font-size:11px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--gold-pale);border:1px solid rgba(218,175,46,.3);color:var(--ink);display:flex;align-items:center;gap:5px"><div style="width:16px;height:16px;border-radius:50%;background:var(--gold);color:var(--ink);font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center">E</div>Eli</div>
+        </div>
+        <div style="font-size:11px;color:var(--ink-faint);font-style:italic;margin-bottom:20px;line-height:1.4">SpoonStack will use your family's names, food preferences, and schedules to pre-fill your widgets automatically.</div>
+        <button class="btn" style="background:var(--gold);color:var(--ink)" onclick="go(4)">That's my crew →</button>
       </div>
     </div>
-    <div class="fade-in" style="background:var(--ink);border-radius:14px;padding:28px 36px;margin-top:24px;text-align:center;">
-      <p style="font-size:clamp(16px,2.2vw,22px);color:#fff;font-weight:600;line-height:1.6;margin-bottom:8px;">Your brain isn't broken. It's built for things the world hasn't caught up to yet.</p>
-      <p style="font-size:clamp(15px,2vw,20px);color:var(--teal);font-weight:700;">SpoonStack just covers the gap in the meantime.</p>
-    </div>
-  </div>
-</section>
 
-<!-- FIVE VIEWS SECTION -->
-<section style="background:var(--ink);padding:80px 40px;">
-  <div style="max-width:1060px;margin:0 auto;">
-    <div style="text-align:center;margin-bottom:52px;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;margin-bottom:12px;">One app. Five views.</div>
-      <h2 style="font-size:clamp(26px,4vw,42px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:14px;">Everything your family needs.<br><span style="color:#DAAF2E;">All in one place.</span></h2>
-      <p style="font-size:16px;color:rgba(255,255,255,.55);max-width:520px;margin:0 auto;line-height:1.65;">SpoonStack isn't one tool. It's a system. Each view does something different — and they all talk to each other.</p>
+    <!-- ══ 4. ONE HARD THING ══ -->
+    <div class="sc" id="s4" style="background:var(--cream);min-height:100%">
+      <div class="ob" style="display:flex;flex-direction:column;min-height:750px">
+        <div class="sdots"><div class="sd d"></div><div class="sd d"></div><div class="sd d"></div><div class="sd c"></div></div>
+        <div class="ost">Step 3 of 4</div>
+        <div class="oq">One thing that always falls through the cracks.</div>
+        <div class="osub">Type it below. SpoonStack will help you handle it.</div>
+        <textarea class="ta" id="hard-thing-input" style="font-size:16px;font-weight:500;min-height:100px;letter-spacing:-.01em;line-height:1.4" placeholder="calling the doctor about Marcus's eval..."></textarea>
+        <div style="font-size:10px;color:var(--ink-faint);font-style:italic;margin-bottom:20px">This goes straight into your Brain and pre-fills your One Hard Thing widget every morning.</div>
+        <button class="btn" style="background:var(--gold);color:var(--ink);margin-top:auto" onclick="go(5)">Got it — build my stack →</button>
+      </div>
     </div>
 
-    <!-- BENTO GRID -->
-    <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:14px;">
+    <!-- ══ 5. STACK READY ══ -->
+    <div class="sc ready" id="s5">
+      <div class="sorb">✓</div>
+      <div class="rtl">Your Morning Energy<br>stack is ready</div>
+      <div class="rsb">7 widgets · pre-populated</div>
+      <div style="width:100%;margin-bottom:24px">
+        <div class="mc" style="animation-delay:200ms"><div class="mcb"></div><div class="mci"><div class="mct">🚀 The Launching Pad</div><div class="mcs">One physical thing. Then the stack unlocks.</div></div></div>
+        <div class="mc" style="animation-delay:320ms"><div class="mcb"></div><div class="mci"><div class="mct">📞 One Hard Thing</div><div class="mcs" style="color:var(--coral)" id="oht-preview">Sitting 11 days: Call CVS about Vyvanse →</div></div></div>
+        <div class="mc" style="animation-delay:440ms"><div class="mcb"></div><div class="mci"><div class="mct">🎒 School Scramble</div><div class="mcs">Zoe · Marcus · Priya · Eli · 7:45am</div></div></div>
+      </div>
+      <button class="btn" style="background:var(--gold);color:var(--ink)" onclick="go(6)">Open my stack →</button>
+    </div>
 
-      <!-- THE SHELF — large left -->
-      <div style="grid-column:span 5;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:#DAAF2E;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🗂</div>
-          <div>
-            <div style="font-size:16px;font-weight:800;color:#fff;">The Shelf</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">home screen · manage all your SpoonStacks</div>
+    <!-- ══ 6. MORNING STACK ══ -->
+    <div class="sc" id="s6" style="flex-direction:column">
+      <div class="tb">
+        <div class="tbl">SpoonStack</div>
+        <div class="tbn"><div class="tp on" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div>
+        <div class="tw">☀️ 74°</div>
+      </div>
+      <div class="ab">
+        <div class="anch">
+          <div class="at">9:14<span class="at-ampm">AM</span></div>
+          <div class="ar">
+            <div class="adate">Wednesday · May 7</div>
+            <div class="bps">
+              <div class="bp" onclick="setBudget(this,'High')">High</div>
+              <div class="bp on" onclick="setBudget(this,'Okay')">Okay</div>
+              <div class="bp" onclick="setBudget(this,'Low')">Low</div>
+              <div class="bp" onclick="setBudget(this,'Crisis')">Crisis</div>
+            </div>
           </div>
         </div>
-        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;">All your SpoonStacks live here. Build new ones, edit existing ones, browse the widget library, and fork stacks from the community. Your control panel.</p>
-        <!-- mini shelf preview -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px;">
-          <div style="background:#DAAF2E;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#3D3000;">Morning</div>
-          <div style="background:#1D9E75;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#fff;">Sunday Reset</div>
-          <div style="background:#8B6FE8;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#fff;">Evening</div>
-          <div style="background:#7A8FA6;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#fff;">Low Spoons</div>
-          <div style="background:#C4427A;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#fff;">Dumpster Fire</div>
-          <div style="background:#7A6E8A;border-radius:8px;padding:8px;font-size:10px;font-weight:700;color:#fff;">Freeze</div>
-        </div>
-        <a href="https://spoonstackapp.vercel.app" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:#DAAF2E;font-size:13px;font-weight:700;text-decoration:none;margin-top:auto;">Open the app →</a>
-      </div>
+        <div class="greet"><div class="gb" style="background:var(--gold)"></div><div class="gc"><div class="gt">Good morning.</div><div class="gs">3 things need attention · Marcus pickup 2:45 (no bus Friday)</div></div></div>
 
-      <!-- SPOONSTACK VIEW — right top -->
-      <div style="grid-column:span 7;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:#8B6FE8;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📺</div>
-          <div>
-            <div style="font-size:16px;font-weight:800;color:#fff;">SpoonStack View</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">live display · time-aware · any screen</div>
+        <!-- Launching Pad -->
+        <div class="card" id="lp">
+          <div class="cb" style="background:var(--gold)"></div>
+          <div class="cbody">
+            <div class="ct">🚀 The Launching Pad</div>
+            <div class="cs">One physical thing before the stack opens.</div>
+            <div class="well" style="padding:16px 14px">
+              <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:4px;line-height:1.4;text-align:center">What is one physical thing you can do right now?</div>
+              <div style="font-size:11px;color:var(--ink-soft);margin-bottom:12px;text-align:center">Pick one or type your own below.</div>
+              <div class="chips">
+                <div class="chip" onclick="tapChip(this,'Turn on the kettle')">Turn on the kettle</div>
+                <div class="chip" onclick="tapChip(this,'Put on shoes')">Put on shoes</div>
+                <div class="chip" onclick="tapChip(this,'Open the blinds')">Open the blinds</div>
+              </div>
+              <input id="custom-anchor" style="width:100%;border:1px solid rgba(44,40,32,.12);border-radius:8px;padding:7px 10px;font-size:12px;background:#FFFDF7;color:var(--ink);outline:none;font-family:var(--fs);margin-bottom:8px" placeholder="Or type something else...">
+              <button class="btn" style="background:var(--gold);color:var(--ink)" onclick="doUnlock()">That's my anchor — unlock stack →</button>
+            </div>
           </div>
         </div>
-        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:16px;">The live view of whichever SpoonStack is relevant right now — your phone, a tablet, a kitchen touch screen. Switches automatically morning to evening. Or pick any SpoonStack manually.</p>
-        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <div style="width:8px;height:8px;border-radius:50%;background:#DAAF2E;"></div>
-            <span style="font-size:12px;font-weight:700;color:#fff;">Morning SpoonStack</span>
-          </div>
-          <span style="font-size:10px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">auto-switches at 5pm →</span>
-        </div>
-        <a href="spoonstack-screen.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:#8B6FE8;font-size:13px;font-weight:700;text-decoration:none;margin-top:16px;">See the demo →</a>
-      </div>
 
-      <!-- SECOND BRAIN — left bottom -->
-      <div style="grid-column:span 4;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;right:0;background:#C4427A;color:#fff;font-size:9px;font-weight:700;padding:4px 10px;border-radius:0 16px 0 8px;font-family:'IBM Plex Mono',monospace;">NAME TBD</div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:#E8399A;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🧠</div>
-          <div>
-            <div style="font-size:16px;font-weight:800;color:#fff;">Second Brain</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">your personal context map</div>
-          </div>
-        </div>
-        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:16px;">Everything about you and your family, mapped visually. Private things stay private. The rest powers every widget — so you never repeat yourself.</p>
-        <a href="spoonstack-brain.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:#E8399A;font-size:13px;font-weight:700;text-decoration:none;">See the mockup →</a>
-      </div>
+        <!-- OHT locked -->
+        <div class="card locked" id="oht-card" style="opacity:.35;pointer-events:none"><div class="cb" style="background:var(--gold)"></div><div class="cbody"><div class="ct">📞 One Hard Thing</div><div class="cs">The task that always falls through the cracks.</div><div class="bbox"><div class="bbl">Sitting there 11 days</div><div class="bi" style="font-weight:600" id="oht-task-s6">Call CVS about prior auth for Vyvanse</div></div><button class="btn" style="background:var(--gold);color:var(--ink)" onclick="go(7)">Help me make this call →</button></div></div>
 
-      <!-- FAMILY WIKI — center bottom -->
-      <div style="grid-column:span 4;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:#2A7A8C;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📖</div>
-          <div>
-            <div style="font-size:16px;font-weight:800;color:#fff;">Family Wiki</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">the long memory · family-facing</div>
-          </div>
-        </div>
-        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:16px;">Safe foods, medical notes, house systems, family memories. Organized once, findable forever. Branden can check it. Future you will thank you.</p>
-        <a href="spoonstack-wiki.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:#2A7A8C;font-size:13px;font-weight:700;text-decoration:none;">See the mockup →</a>
-      </div>
+        <!-- Dinner locked -->
+        <div class="card locked" id="dd-card" style="opacity:.35;pointer-events:none"><div class="cb" style="background:var(--gold)"></div><div class="cbody"><div class="ct">🍳 Dinner Decider</div><div class="cs">Answer the 5pm question at 8am.</div><div class="opts"><div class="opt rec" onclick="pickDinner(this,8)"><div class="on">Pasta + butter ⭐</div><div class="ons">Everyone eats it · 10 min</div></div><div class="opt" onclick="pickDinner(this,8)"><div class="on">Sheet pan chicken</div><div class="ons">~15 min · deconstruct for kids</div></div><div class="opt" onclick="pickDinner(this,8)"><div class="on">Quesadillas</div><div class="ons">8 min · no mixing</div></div></div></div></div>
 
-      <!-- WIDGET LIBRARY — right bottom -->
-      <div style="grid-column:span 4;background:rgba(218,175,46,.12);border:1px solid rgba(218,175,46,.2);border-radius:16px;padding:28px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:36px;height:36px;border-radius:10px;background:#DAAF2E;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🧩</div>
-          <div>
-            <div style="font-size:16px;font-weight:800;color:#fff;">Widget Library</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);font-family:'IBM Plex Mono',monospace;">70+ widgets · 12 stacks · browse + build</div>
+        <!-- Partner locked -->
+        <div class="card locked" id="pb-card" style="opacity:.35;pointer-events:none"><div class="cb" style="background:var(--gold)"></div><div class="cbody"><div class="ct">💬 Partner Briefing</div><div class="cs">So they don't text at 3pm asking.</div><div class="blbl">Draft ready from your Brain</div><div class="bubble" style="background:var(--green)" id="pb-bubble-s6">Hey — this week: twins speech Mon + Wed. Marcus pickup Fri 2:45. Can you handle dinner Thursday?</div><div class="pills"><div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="go(9)">Review + send →</div><div class="pill" onclick="makeFunnierS6()">Funnier</div><div class="pill" onclick="showToast('Saved to Brain ✓')">Save</div></div></div></div>
+
+      </div><!-- end ab -->
+    </div><!-- end s6 -->
+
+    <!-- ══ 7. OHT DETAIL ══ -->
+    <div class="sc" id="s7" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp on" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <button class="back" onclick="go(6)">← Back to Morning Energy</button>
+        <div class="card">
+          <div class="cb" style="background:var(--gold)"></div>
+          <div class="cbody">
+            <div class="ct">📞 One Hard Thing</div>
+            <div class="cs">The task that's been sitting there. Script it.</div>
+            <div class="bbox"><div class="bbl">Sitting there 11 days</div><div class="bi" style="font-weight:600">Call CVS about prior auth for Vyvanse</div></div>
+            <div id="oht-load"><div class="ldots"><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div><div class="ltxt">scripting your opener...</div></div>
+            <div id="oht-done" style="display:none">
+              <div class="slbl">What to say when they pick up</div>
+              <div class="sbox">"Hi, I'm calling about a prior authorization for Vyvanse. I want to check on the status of the request."</div>
+              <div class="sfall">"I don't know — can you tell me what I'd need to find out?" (if you freeze)</div>
+              <div class="pills">
+                <div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="completeOHT()">Copy + dial now</div>
+                <div class="pill" onclick="openModal('oht-q')">What will they ask?</div>
+                <div class="pill" onclick="openModal('oht-email')">Send email instead</div>
+                <div class="pill" onclick="showToast('Delegated to Partner ✓')">Delegate this</div>
+              </div>
+            </div>
           </div>
         </div>
-        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:16px;">Every widget in the SpoonStack system. Browse by stack, filter by mood, build your own SpoonStacks by mixing and matching.</p>
-        <a href="widget-collection.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;color:#DAAF2E;font-size:13px;font-weight:700;text-decoration:none;">Browse all widgets →</a>
-      </div>
-
-    </div>
-
-    <!-- CONNECTING LINE -->
-    <div style="text-align:center;margin-top:40px;padding-top:40px;border-top:1px solid rgba(255,255,255,.08);">
-      <p style="font-size:15px;color:rgba(255,255,255,.5);line-height:1.7;max-width:560px;margin:0 auto;">All five views are one product. Your Second Brain powers the Wiki. The Wiki informs your SpoonStacks. Your SpoonStacks live on the Shelf. Any SpoonStack can display on any screen. <strong style="color:rgba(255,255,255,.8);">Everything connects. Nothing gets lost.</strong></p>
-    </div>
-  </div>
-</section>
-
-<!-- SECTION 1: LIVE DEMO -->
-<section class="demo-section" id="demo">
-  <div style="max-width:1060px;margin:0 auto;">
-    <div class="eyebrow fade-in">Try it now</div>
-    <h2 class="fade-in">Pick a stack. Tap a widget.<br>See exactly what Claude produces.</h2>
-    <p class="section-desc fade-in" style="margin-bottom:32px;">These are your pre-built SpoonStacks - ready to use, no setup required. <strong>You're always the CEO.</strong> Claude does the prep work and waits for your call.</p>
-  </div>
-  <div class="demo-wrap">
-    <div class="hub-selector" id="hubSelector">
-      <div class="hub-selector-title">Your stacks</div>
-    </div>
-    <div>
-      <div class="hub-display" id="hubDisplay">
-        <div class="hub-display-accent" id="hubAccent"></div>
-        <div class="hub-display-header">
-          <div class="hub-display-badge" id="hubBadge"></div>
-          <div class="hub-display-name" id="hubName"></div>
-          <div class="hub-display-desc" id="hubDesc"></div>
-        </div>
-        <div class="widgets-grid" id="widgetsGrid"></div>
-      </div>
-      <div class="widget-panel" id="widgetPanel">
-        <div class="wp-header">
-          <span class="wp-badge" id="wpBadge"></span>
-          <span class="wp-counter" id="wpCounter"></span>
-        </div>
-        <div class="wp-name" id="wpName"></div>
-        <div class="wp-one" id="wpOne"></div>
-        <div class="wp-content">
-          <div class="wp-output"><div class="wp-ol">What it produces</div><div id="wpOutput"></div></div>
-          <div class="wp-btns" id="wpBtns"></div>
-        </div>
-        <div class="wp-prompt"><div class="wpl">Prompt</div><div class="wpt" id="wpPrompt"></div></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- SECTION 2: BUILDER -->
-<section class="builder-section" id="builder">
-  <div class="builder-wrap">
-    <div class="eyebrow fade-in">Build your own stack</div>
-    <h2 class="fade-in">Mix widgets from any hub.<br>Make it yours.</h2>
-    <p class="section-desc fade-in" style="margin-bottom:0;">Want a hub that pulls your favorite widget from each hub? Drag them in. Name it. Done. Your custom hub works exactly like the pre-built ones.</p>
-    <div class="builder-ui">
-      <div class="widget-library">
-        <div class="lib-title">Drag widgets →</div>
-        <div class="lib-scroll" id="libScroll"></div>
-      </div>
-      <div>
-        <div class="hub-canvas" id="hubCanvas" ondragover="allowDrop(event)" ondrop="dropWidget(event)">
-          <div class="hub-canvas-header">
-            <input class="hub-name-input" id="hubNameInput" placeholder="Name your stack…" maxlength="32">
-            <button class="hub-save-btn" id="hubSaveBtn" onclick="saveHub()">Save stack ✓</button>
+    <!-- ══ 8. DINNER DETAIL ══ -->
+    <div class="sc" id="s8" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp on" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <button class="back" onclick="go(6)">← Back to Morning Energy</button>
+        <div class="card">
+          <div class="cb" style="background:var(--gold)"></div>
+          <div class="cbody">
+            <div class="ct">🍳 Dinner Decider</div>
+            <div class="cs">Answer the 5pm question at 8am.</div>
+            <div class="bbox"><div class="bbl">From your Brain — safe foods</div><div class="bi">Zoe: no mushrooms · Marcus: plain only · Priya + Eli: anything</div></div>
+            <div class="opts" id="dinner-opts">
+              <div class="opt rec" id="d1" onclick="selectD(1)"><div class="on">Pasta + butter ⭐</div><div class="ons">Everyone eats it · 10 min · nothing to think about</div></div>
+              <div class="opt" id="d2" onclick="selectD(2)"><div class="on">Sheet pan chicken + rice</div><div class="ons">Deconstructed for kids · ~15 min</div></div>
+              <div class="opt" id="d3" onclick="selectD(3)"><div class="on">Quesadillas + apple slices</div><div class="ons">Works for all · 8 min · no mixing</div></div>
+            </div>
+            <div id="dinner-action" style="display:none">
+              <div class="pills">
+                <div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="completeDinner()">Lock this in</div>
+                <div class="pill" onclick="openModal('dinner-steps')">Give me steps</div>
+                <div class="pill" onclick="showToast('Dinner plan sent to Partner ✓')">Send to Partner</div>
+                <div class="pill" onclick="openModal('order-opts')">Order instead</div>
+              </div>
+            </div>
           </div>
-          <div id="dropHint" class="hub-drop-hint">
-            <div class="hint-icon">🧩</div>
-            <p><strong>Drag widgets here</strong> from any hub.<br>Build a stack that fits exactly how your brain works.</p>
-          </div>
-          <div class="dropped-widgets" id="droppedWidgets" style="display:none"></div>
         </div>
-        <p style="font-size:12px;color:var(--ink-3);margin-top:10px;font-family:'IBM Plex Mono',monospace;">Tip: mix across hubs - e.g. Today's Triage + Text You've Been Avoiding + Replay Loop Interrupter</p>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- SECTION 3: COMMUNITY -->
-<section class="community-section" id="community">
-  <div style="max-width:1060px;margin:0 auto;">
-    <div class="eyebrow fade-in">Community stacks</div>
-    <h2 class="fade-in">Browse what others built.<br>Fork in one click.</h2>
-    <p class="section-desc fade-in" style="margin-bottom:0;">Someone already built a stack for your situation. Fork it, rename it, make it yours.</p>
-    <div class="stacks-grid" id="stacksGrid"></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="cta-section">
-  <div class="cta-inner">
-    <div class="eyebrow" style="text-align:center">Get early access</div>
-    <h2>Stack your spoons.<br>Not your to-do list.</h2>
-    <p>Join the waitlist for early access to SpoonStack and first dibs on the <em>Stack Your Spoons</em> field manual. <strong>Human-led. AI-assisted. Built for your brain.</strong></p>
-    <div class="waitlist-form">
-      <input type="email" id="email-2" placeholder="your@email.com">
-      <button onclick="join(2)">Join waitlist →</button>
+    <!-- ══ 9. PARTNER BRIEFING DETAIL ══ -->
+    <div class="sc" id="s9" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp on" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <button class="back" onclick="go(6)">← Back to Morning Energy</button>
+        <div class="card" id="pb-detail-card">
+          <div class="cb" style="background:var(--gold)"></div>
+          <div class="cbody">
+            <div class="ct">💬 Partner Briefing</div>
+            <div class="cs">So they don't text at 3pm asking what you already said.</div>
+            <div class="blbl">Draft ready from your Brain</div>
+            <div class="bubble" style="background:var(--green)" id="pb-bubble">Hey — this week: twins speech Mon + Wed, I'll grab them. Marcus pickup Fri by 2:45 (no bus). Can you handle dinner Thursday? Also — CVS call is done ✓</div>
+            <div class="pills">
+              <div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="completePB()">Send</div>
+              <div class="pill" onclick="openModal('edit-pb')">Modify</div>
+              <div class="pill" onclick="makeFunnier()">Funnier</div>
+              <div class="pill" onclick="showToast('Saved to Brain ✓')">Save</div>
+              <div class="pill" onclick="showToast('Shorter version drafted...')">Shorter</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="success-msg" id="ok-2" style="margin:0 auto;display:none;">You're on the list!</div>
-    <p class="hero-note" style="margin-top:12px;">No spam · No pressure · Unsubscribe any time</p>
-    <div style="margin-top:24px;">
-      <a href="https://spoonstackapp.vercel.app" target="_blank" style="display:inline-flex;align-items:center;gap:8px;color:var(--teal);font-size:15px;font-weight:700;text-decoration:none;border:2px solid var(--teal);border-radius:100px;padding:12px 28px;transition:background .2s,color .2s;" onmouseover="this.style.background='var(--teal)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--teal)'">
-        Try the app free - no account needed
-      </a>
+
+    <!-- ══ 10. AHA MOMENT ══ -->
+    <div class="sc" id="s10" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp on" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <div class="anch"><div class="at">9:22<span class="at-ampm">AM</span></div><div class="ar"><div class="adate">Wednesday · May 7</div><div class="bps"><div class="bp on">Okay</div></div></div></div>
+        <div class="fin"><div class="fin-t">You've handled 3 things this morning.<br>The rest can wait.</div></div>
+        <div class="ds">
+          <div class="ds-lbl">Done today</div>
+          <div class="ds-row"><div class="ds-ck">✓</div>One Hard Thing — scripted<div class="ds-t">9:14am</div></div>
+          <div class="ds-row"><div class="ds-ck">✓</div>Dinner decided — pasta<div class="ds-t">9:18am</div></div>
+          <div class="ds-row"><div class="ds-ck">✓</div>Partner Briefing sent<div class="ds-t">9:22am</div></div>
+          <div class="cu-lbl">Coming up</div>
+          <div class="cu-row"><div class="cu-t">2:45pm</div>Marcus pickup — no bus</div>
+          <div class="cu-row"><div class="cu-t">5:00pm</div>Pasta night — 10 min</div>
+        </div>
+        <div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">📞 One Hard Thing</div><div class="done-m">Script copied · 1 insight saved · 9:14am</div></div><div class="done-ck">✓</div></div></div>
+        <div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">🍳 Dinner Decider</div><div class="done-m">Pasta + butter locked in · 9:18am</div></div><div class="done-ck">✓</div></div></div>
+        <div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">💬 Partner Briefing</div><div class="done-m">Sent · 1 insight saved · 9:22am</div></div><div class="done-ck">✓</div></div></div>
+        <div style="text-align:center;padding:14px 0 8px"><div style="font-family:var(--fm);font-size:8px;color:var(--ink-faint);letter-spacing:.08em">3 INSIGHTS SAVED TO YOUR BRAIN TODAY</div></div>
+      </div>
+    </div>
+
+    <!-- ══ 11. SHELF ══ -->
+    <div class="sc" id="s11" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp" onclick="go(6)">SpoonStack</div><div class="tp on" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <div style="font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px">The Shelf</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-bottom:12px">73 widgets across 11 stacks. Browse, discover, launch.</div>
+        <input class="shelf-search" placeholder="Search widgets...">
+        <div class="sfps">
+          <div class="sfp on" style="background:var(--ink);color:#fff;border-color:transparent">All</div>
+          <div class="sfp" style="border-color:var(--gold);color:var(--gold)" onclick="showToast('Showing Morning Energy widgets')">Morning</div>
+          <div class="sfp" style="border-color:var(--coral);color:var(--coral)" onclick="showToast('Showing Low Spoons widgets')">Low Spoons</div>
+          <div class="sfp" style="border-color:var(--pink);color:var(--pink)" onclick="showToast('Showing Dumpster Fire widgets')">🔥 Fire</div>
+          <div class="sfp" style="border-color:var(--cyan);color:var(--cyan)" onclick="showToast('Showing Kid Stuff widgets')">Kids</div>
+        </div>
+        <div class="sgrid">
+          <div class="scard" onclick="showWidget('oht')"><div class="sc-bar" style="background:var(--gold)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--gold)"></div><span style="color:var(--gold)">Morning</span></div><div class="sc-icon">📞</div><div class="sc-name">One Hard Thing</div><div class="sc-one">The task that's been sitting there.</div></div></div>
+          <div class="scard" onclick="showWidget('dayplan')"><div class="sc-bar" style="background:var(--gold)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--gold)"></div><span style="color:var(--gold)">Morning</span></div><div class="sc-icon">🗓</div><div class="sc-name">Day Plan</div><div class="sc-one">Dump your day. Get it sorted.</div></div></div>
+          <div class="scard" onclick="showWidget('triage')"><div class="sc-bar" style="background:var(--coral)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--coral)"></div><span style="color:var(--coral)">Low Spoons</span></div><div class="sc-icon">🌊</div><div class="sc-name">Today's Triage</div><div class="sc-one">Your day collapsed. Survival version.</div></div></div>
+          <div class="scard" onclick="showWidget('dumpster')"><div class="sc-bar" style="background:var(--pink)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--pink)"></div><span style="color:var(--pink)">🔥 Fire</span></div><div class="sc-icon">🔥</div><div class="sc-name">Name What's Happening</div><div class="sc-one">You feel like garbage. Start here.</div></div></div>
+          <div class="scard" onclick="showWidget('teacher')"><div class="sc-bar" style="background:var(--cyan)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--cyan)"></div><span style="color:var(--cyan)">Kids</span></div><div class="sc-icon">✉️</div><div class="sc-name">Teacher Email</div><div class="sc-one">Advocate without That Mom energy.</div></div></div>
+          <div class="scard" onclick="showWidget('sendit')"><div class="sc-bar" style="background:var(--plum)"></div><div class="sc-body"><div class="sc-st"><div class="sc-dot" style="background:var(--plum)"></div><span style="color:var(--plum)">Text Avoiding</span></div><div class="sc-icon">👁</div><div class="sc-name">Send It or Don't</div><div class="sc-one">Your thumb is hovering. Ask first.</div></div></div>
+        </div>
+        <div class="sec-lbl">Your Stacks</div>
+        <div class="stk" onclick="go(6)"><div class="stk-bar" style="background:var(--gold)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--gold)"></div><div><div class="stk-name">Morning Energy</div><div class="stk-desc">Alarm to school drop-off</div></div><div class="stk-ct">7</div></div></div>
+        <div class="stk" onclick="showToast('Low Spoons Day — 6 widgets')"><div class="stk-bar" style="background:var(--coral)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--coral)"></div><div><div class="stk-name">Low Spoons Day</div><div class="stk-desc">Survival mode only</div></div><div class="stk-ct">6</div></div></div>
+        <div class="stk" onclick="showToast('Emotional Dumpster Fire — 7 widgets')"><div class="stk-bar" style="background:var(--pink)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--pink)"></div><div><div class="stk-name">Emotional Dumpster Fire</div><div class="stk-desc">Shame spiral, RSD, overwhelm</div></div><div class="stk-ct">7</div></div></div>
+        <div class="sec-lbl">Community Stacks</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-bottom:10px;line-height:1.4">Built by the SpoonStack community. Fork any stack and make it yours.</div>
+        <div class="stk" onclick="forkStack('Postpartum Survival Stack')"><div class="stk-bar" style="background:var(--hot-pink)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--hot-pink)"></div><div><div class="stk-name">Postpartum Survival Stack</div><div class="stk-desc">by @neurodivergentmom · ⭐ 847 forks</div></div><div style="font-family:var(--fm);font-size:8px;color:var(--hot-pink);margin-left:auto;cursor:pointer">Fork</div></div></div>
+        <div class="stk" onclick="forkStack('Chronic Illness Flare Day')"><div class="stk-bar" style="background:var(--purple)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--purple)"></div><div><div class="stk-name">Chronic Illness Flare Day</div><div class="stk-desc">by @spooniemom · ⭐ 612 forks</div></div><div style="font-family:var(--fm);font-size:8px;color:var(--purple);margin-left:auto;cursor:pointer">Fork</div></div></div>
+        <div class="stk" onclick="forkStack('ADHD Work From Home')"><div class="stk-bar" style="background:var(--teal)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--teal)"></div><div><div class="stk-name">ADHD Work From Home</div><div class="stk-desc">by @adhdentrepreneur · ⭐ 441 forks</div></div><div style="font-family:var(--fm);font-size:8px;color:var(--teal);margin-left:auto;cursor:pointer">Fork</div></div></div>
+        <div class="stk" onclick="forkStack('Autism Parent Meltdown Recovery')"><div class="stk-bar" style="background:var(--lime)"></div><div class="stk-row"><div class="stk-orb" style="background:var(--lime)"></div><div><div class="stk-name">Autism Parent: Meltdown Recovery</div><div class="stk-desc">by @autismmomlife · ⭐ 389 forks</div></div><div style="font-family:var(--fm);font-size:8px;color:var(--lime);margin-left:auto;cursor:pointer">Fork</div></div></div>
+      </div>
+    </div>
+
+    <!-- ══ 12. BRAIN ══ -->
+    <div class="sc" id="s12" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp on" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div style="display:flex;flex:1;overflow:hidden">
+        <div class="brain-side">
+          <div class="brain-logo">Brain</div>
+          <div style="font-family:var(--fm);font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:6px">Domains</div>
+          <div class="dom on" id="bd-kids" onclick="brainDom('kids')"><div class="dom-dot" style="background:var(--cyan)"></div><div class="dom-name">Kids</div><div class="dom-ct">12</div></div>
+          <div class="dom" id="bd-partner" onclick="brainDom('partner')"><div class="dom-dot" style="background:var(--hot-pink)"></div><div class="dom-name">Partner</div><div class="dom-ct">4</div></div>
+          <div class="dom" id="bd-house" onclick="brainDom('house')"><div class="dom-dot" style="background:var(--gold)"></div><div class="dom-name">House</div><div class="dom-ct">8</div></div>
+          <div class="dom" id="bd-health" onclick="brainDom('health')"><div class="dom-dot" style="background:var(--coral)"></div><div class="dom-name">Health</div><div class="dom-ct">6</div></div>
+          <div class="dom" id="bd-social" onclick="brainDom('social')"><div class="dom-dot" style="background:var(--purple)"></div><div class="dom-name">Social</div><div class="dom-ct">9</div></div>
+          <div class="dom" id="bd-you" onclick="brainDom('you')"><div class="dom-dot" style="background:var(--lime)"></div><div class="dom-name">You</div><div class="dom-ct">7</div></div>
+          <div class="dom" id="bd-vault" onclick="brainDom('vault')"><div class="dom-dot" style="background:var(--teal)"></div><div class="dom-name">Vault</div><div class="dom-ct">14</div></div>
+          <div style="margin-top:12px;text-align:center"><div style="font-family:var(--fm);font-size:7px;color:rgba(255,255,255,.25);margin-bottom:3px">Health</div><div style="font-size:14px;font-weight:700;color:var(--green)">78%</div></div>
+        </div>
+        <div class="brain-main" id="brain-main"></div>
+      </div>
+      <div style="position:relative">
+        <button onclick="showToast('Quick Capture opened ✦')" style="position:absolute;bottom:16px;right:16px;width:40px;height:40px;border-radius:50%;background:var(--green);border:none;color:#fff;font-size:16px;cursor:pointer;box-shadow:0 4px 14px rgba(29,158,117,.4)">✦</button>
+      </div>
+    </div>
+
+    <!-- ══ 13. WIKI ══ -->
+    <div class="sc" id="s13" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div style="display:flex;flex:1;overflow:hidden">
+        <div class="wiki-side">
+          <div style="font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px">People</div>
+          <div class="wp on" id="wp-you" onclick="wikiPerson('you')"><div class="wpa" style="background:var(--hot-pink)">Y</div><div class="wpn">You</div></div>
+          <div class="wp" id="wp-partner" onclick="wikiPerson('partner')"><div class="wpa" style="background:var(--purple)">P</div><div class="wpn">Partner</div></div>
+          <div class="wp" id="wp-zoe" onclick="wikiPerson('zoe')"><div class="wpa" style="background:var(--cyan)">Z</div><div class="wpn">Zoe</div></div>
+          <div class="wp" id="wp-marcus" onclick="wikiPerson('marcus')"><div class="wpa" style="background:var(--lime);color:var(--ink)">M</div><div class="wpn">Marcus</div></div>
+          <div class="wp" id="wp-priya" onclick="wikiPerson('priya')"><div class="wpa" style="background:var(--coral)">P</div><div class="wpn">Priya</div></div>
+          <div class="wp" id="wp-eli" onclick="wikiPerson('eli')"><div class="wpa" style="background:var(--gold);color:var(--ink)">E</div><div class="wpn">Eli</div></div>
+          <div style="font-family:var(--fm);font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 7px">Topics</div>
+          <div class="wp" onclick="showToast('Safe Foods — loading...')"><div style="font-size:13px">🥗</div><div class="wpn" style="font-size:9px">Safe Foods</div></div>
+          <div class="wp" onclick="showToast('Medical records — loading...')"><div style="font-size:13px">🏥</div><div class="wpn" style="font-size:9px">Medical</div></div>
+          <div class="wp" onclick="showToast('School info — loading...')"><div style="font-size:13px">🏫</div><div class="wpn" style="font-size:9px">School</div></div>
+        </div>
+        <div class="wiki-main" id="wiki-main"></div>
+      </div>
+    </div>
+
+    <!-- ══ 14. BRAIN INBOX ══ -->
+    <div class="sc" id="s14" style="flex-direction:column">
+      <div class="tb"><div class="tbl">SpoonStack</div><div class="tbn"><div class="tp" onclick="go(6)">SpoonStack</div><div class="tp" onclick="go(11)">Shelf</div><div class="tp on" onclick="go(12)">Brain</div></div><div class="tw">☀️ 74°</div></div>
+      <div class="ab">
+        <button class="back" onclick="go(12)">← Back to Brain</button>
+        <div style="font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:3px">Brain Inbox</div>
+        <div style="font-size:11px;color:var(--ink-soft);margin-bottom:14px;line-height:1.45">Scan, forward, or paste anything. SpoonStack reads it and files it.</div>
+        <div onclick="doScan()" style="border:2px dashed rgba(44,40,32,.15);border-radius:14px;padding:22px 16px;text-align:center;margin-bottom:12px;cursor:pointer;transition:all .2s;background:#FFFDF7" onmouseover="this.style.borderColor='var(--gold)';this.style.background='var(--gold-pale)'" onmouseout="this.style.borderColor='rgba(44,40,32,.15)';this.style.background='#FFFDF7'">
+          <div style="font-size:26px;margin-bottom:7px">📸</div>
+          <div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:3px">Scan a document</div>
+          <div style="font-size:10px;color:var(--ink-soft)">Point your camera at anything — permission slips, prescriptions, notes</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px">
+          <div onclick="showToast('your address: you@in.spoonstack.app')" style="display:flex;align-items:center;gap:10px;background:#FFFDF7;border-radius:12px;padding:10px 12px;box-shadow:var(--sw);cursor:pointer" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'"><div style="font-size:18px">✉️</div><div><div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:1px">Forward to your inbox</div><div style="font-size:10px;color:var(--ink-soft)">you@in.spoonstack.app</div></div><div style="margin-left:auto;font-family:var(--fm);font-size:8px;padding:2px 7px;border-radius:100px;background:var(--green-pale);color:var(--green)">Live</div></div>
+          <div onclick="showToast('Voice capture ready — tap to speak')" style="display:flex;align-items:center;gap:10px;background:#FFFDF7;border-radius:12px;padding:10px 12px;box-shadow:var(--sw);cursor:pointer" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'"><div style="font-size:18px">🎙</div><div><div style="font-size:12px;font-weight:500;color:var(--ink);margin-bottom:1px">Voice capture</div><div style="font-size:10px;color:var(--ink-soft)">Speak it. SpoonStack types it.</div></div><div style="margin-left:auto;font-family:var(--fm);font-size:8px;padding:2px 7px;border-radius:100px;background:var(--gold-pale);color:var(--ink)">Tap</div></div>
+        </div>
+        <div style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px">Recently processed</div>
+        <div id="inbox-list">
+          <div class="iitem">
+            <div class="ihdr"><div class="ityp">Email</div><div class="itime">9:05am</div></div>
+            <div class="itxt">School newsletter: Picture day is May 14. Return forms by May 12. Cost: $18 per package.</div>
+            <div class="ipills"><div class="ip p" onclick="showToast('Filed to Kids domain ✓')">File to Kids</div><div class="ip" onclick="showToast('Added to calendar ✓')">Add to calendar</div><div class="ip" onclick="dismissItem(this)">Dismiss</div></div>
+          </div>
+          <div class="iitem">
+            <div class="ihdr"><div class="ityp" style="background:var(--lime-pale);color:var(--lime)">Scan</div><div class="itime">Yesterday</div></div>
+            <div class="itxt">Permission slip: Science museum May 14. Cost: $8. Bag lunch. Sign page 3.</div>
+            <div class="ipills"><div class="ip p" onclick="showToast('Filed to Kids domain ✓')">File to Kids</div><div class="ip" onclick="dismissItem(this)">Dismiss</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pi -->
+
+  <!-- ── Widget preview sheet ── -->
+  <div class="modal" id="widget-sheet" onclick="closeModal('widget-sheet')" style="align-items:flex-end">
+    <div class="modal-card" onclick="event.stopPropagation()" style="border-radius:20px 20px 0 0;max-height:75%">
+      <button class="modal-close" onclick="closeModal('widget-sheet')">✕</button>
+      <div id="widget-sheet-content"></div>
     </div>
   </div>
-</section>
 
-<footer>
-  <div class="footer-logo">SpoonStack</div>
-  <div class="footer-sub">AI energy operating system for neurodivergent people · Built on spoon theory · Powered by Claude<br>© 2026 Brittany May · spoonstack.vercel.app</div>
-  <div class="footer-links">
-    <a href="#demo">Try a stack</a>
-    <a href="#builder">Build your own stack</a>
-    <a href="#community">Community stacks</a>
-    <a href="#waitlist">Join waitlist</a>
+  <!-- ── Modals ── -->
+  <div class="modal" id="modal-oht-q" onclick="closeModal('oht-q')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('oht-q')">✕</button>
+      <div class="modal-title">What will they ask?</div>
+      <div class="modal-sub">Prepare your answers before you dial.</div>
+      <div class="modal-item" onclick="showToast('Answer copied ✓');closeModal('oht-q')">"Can I get your member ID?" → It's on your insurance card, front pocket of wallet.</div>
+      <div class="modal-item" onclick="showToast('Answer copied ✓');closeModal('oht-q')">"What's the drug and dosage?" → Vyvanse 30mg, prescribed by Dr. Chen.</div>
+      <div class="modal-item" onclick="showToast('Answer copied ✓');closeModal('oht-q')">"Was this denied?" → Not sure — checking on status of pending request.</div>
+    </div>
   </div>
-</footer>
+
+  <div class="modal" id="modal-oht-email" onclick="closeModal('oht-email')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('oht-email')">✕</button>
+      <div class="modal-title">Email version</div>
+      <div class="modal-sub">Send this instead of calling.</div>
+      <div class="sbox">"Hi, I'm writing about prior authorization for Vyvanse 30mg for [patient]. Can you tell me the current status and what steps are needed to resolve it? Thank you."</div>
+      <div class="pills" style="margin-top:10px"><div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="showToast('Email copied ✓');closeModal('oht-email')">Copy</div><div class="pill" onclick="closeModal('oht-email')">Cancel</div></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-edit-pb" onclick="closeModal('edit-pb')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('edit-pb')">✕</button>
+      <div class="modal-title">Edit the briefing</div>
+      <div class="modal-sub">Change anything before sending.</div>
+      <textarea class="modal-textarea" id="pb-edit-text">Hey — this week: twins speech Mon + Wed, I'll grab them. Marcus pickup Fri by 2:45 (no bus). Can you handle dinner Thursday?</textarea>
+      <div class="pills"><div class="pill" style="background:var(--gold);color:var(--ink);border-color:transparent" onclick="savePBEdit()">Save changes</div><div class="pill" onclick="closeModal('edit-pb')">Cancel</div></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-dinner-steps" onclick="closeModal('dinner-steps')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('dinner-steps')">✕</button>
+      <div class="modal-title">Pasta + butter — step by step</div>
+      <div class="modal-sub">10 minutes. You've got this.</div>
+      <div class="modal-item">1. Boil salted water in a large pot.</div>
+      <div class="modal-item">2. Add pasta — cook 8–9 min until al dente.</div>
+      <div class="modal-item">3. Drain, return to pot, add 2 tbsp butter.</div>
+      <div class="modal-item">4. Toss until melted. Salt to taste. Done.</div>
+      <div class="pills" style="margin-top:10px"><div class="pill" onclick="showToast('Steps sent to Partner ✓');closeModal('dinner-steps')">Send to Partner</div><div class="pill" onclick="closeModal('dinner-steps')">Got it</div></div>
+    </div>
+  </div>
+
+  <div class="modal" id="modal-order-opts" onclick="closeModal('order-opts')">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('order-opts')">✕</button>
+      <div class="modal-title">Order instead</div>
+      <div class="modal-sub">Places that work for your family.</div>
+      <div class="modal-item" onclick="showToast('Chipotle — opening order...');closeModal('order-opts')">🌯 Chipotle — customizable, everyone eats it</div>
+      <div class="modal-item" onclick="showToast('Moe's — opening order...');closeModal('order-opts')">🌮 Moe's — same deal, slightly cheaper</div>
+      <div class="modal-item" onclick="showToast('Pizza — opening order...');closeModal('order-opts')">🍕 Pizza — Marcus loves it, quick</div>
+    </div>
+  </div>
+
+</div><!-- end phone -->
 
 <script>
-// ── DATA ──────────────────────────────────────────────────
-const HUBS = [
-  { id:'morning', name:'Morning', color:'#DAAF2E', desc:'Alarm to school drop-off', widgets:[
-    { num:'01', name:'Day Plan', one:'Dump your whole day. Get it sorted.', output:`<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#5F5E5A;line-height:1.8"><div>7:30 - school drop-off, shoes, bags</div><div style="color:#DAAF2E;font-weight:700">8:30 - ★ CVS call - best brain window</div><div>10:00 - email contractor, grocery pickup</div><div style="color:#7D6200;font-weight:600">12:00 - Dentist ●</div><div>3:00 - twins speech, dinner start</div></div>`, btns:['Use this','What am I forgetting?','Move something'], prompt:`"Sort my day into a timeline. Star my best focus task. Flag conflicts. Here's everything: [dump]` },
-    { num:'02', name:'School Scramble', one:"It\'s 7:18. Someone can\'t find shoes.", output:`<div style="font-size:12px;line-height:1.8"><div style="display:flex;gap:8px"><span style="font-size:9px;font-weight:700;color:#DAAF2E;min-width:48px;padding-top:2px">B</span><span>project ✓, backpack, lunch, water</span></div><div style="display:flex;gap:8px"><span style="font-size:9px;font-weight:700;color:#DAAF2E;min-width:48px;padding-top:2px">Twin R</span><span>backpack, lunch, speech folder</span></div><div style="display:flex;gap:8px"><span style="font-size:9px;font-weight:700;color:#DAAF2E;min-width:48px;padding-top:2px">Twin J</span><span>backpack, lunch, speech folder</span></div><div style="margin-top:8px;background:#FDF6DC;border-radius:6px;padding:6px 10px;font-size:11px;color:#7D6200;font-weight:600">⚠ gym shoes MIA</div></div>`, btns:['Got it, moving','Text the teacher','Who needs what?'], prompt:`"3 kids, school in [X] min. Here's the situation: [dump]. What's missing? Quick checklist.` },
-    { num:'03', name:'Loop In', one:'So your partner doesn\'t text you at 3pm.', output:`<div style="background:#DCF8C6;border-radius:12px 12px 12px 4px;padding:12px 14px;font-size:12.5px;color:#1A3A22;line-height:1.65">Hey, quick rundown for today: <strong>dentist at 1pm</strong> (I\'ve got it), twins speech at 3 so <strong>can you grab them?</strong> B has a project due. Dinner is sheet pan chicken at 5:30. Don\'t light any pilot lights without me 🙏</div>`, btns:['Send this','Make it shorter','Just his half'], prompt:`"Draft a daily briefing for my partner. Kid schedule, what I need covered, heads-up. Warm. Short.` },
-    { num:'04', name:'Brain Inbox', one:'Jot it now. Organize never. Or later.', output:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div style="background:#FDF6DC;border-radius:6px;padding:8px 10px"><div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7D6200;margin-bottom:5px">Do Today</div><div style="font-size:11px;color:#2C2C2A">Text Robin back<br>Return library books</div></div><div style="background:#FAEEDA;border-radius:6px;padding:8px 10px"><div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8A5A19;margin-bottom:5px">This Week</div><div style="font-size:11px;color:#2C2C2A">Pediatrician<br>Gutters guy</div></div><div style="background:#EEEDE6;border-radius:6px;padding:8px 10px"><div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#5F5E5A;margin-bottom:5px">Check</div><div style="font-size:11px;color:#2C2C2A">Electric bill<br>J field trip form</div></div><div style="background:#FBF2D4;border-radius:6px;padding:8px 10px"><div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#7A5B0C;margin-bottom:5px">★ Save</div><div style="font-size:11px;color:#2C2C2A">J\'s black hole quote<br>Thing Keisha said</div></div></div>`, btns:['Save all','Add to today','Remind me tomorrow'], prompt:`"Brain dump: sort into do today, this week, check on, save for later. [dump]` },
-    { num:'05', name:'Dinner Decider', one:'Answer the 5pm question at 8am.', output:`<div style="background:#FDF6DC;border-radius:10px;padding:13px 15px;margin-bottom:10px"><div style="font-size:14px;font-weight:700;color:#2C2C2A;margin-bottom:5px">Sheet pan chicken + rice bowls</div><div style="font-size:12px;color:#7A6E6A;line-height:1.5">Serve deconstructed for the twins (nothing touching), assembled for everyone else. Hands-on time: 15 min.</div></div>`, btns:['Use this','Give me the steps','Try again','Just order something'], prompt:`"I have [ingredients]. Low effort only. One kid won't eat mixed food. What's for dinner?` },
-    { num:'06', name:'One Hard Thing', one:'The task that\'s been sitting there. Script it.', output:`<div style="background:#E8D44D;border-radius:10px;padding:14px 16px;margin-bottom:10px"><div style="font-size:15px;font-weight:800;color:#3D3000;line-height:1.35">"Hi, I\'m calling about a prior auth for my ADHD medication. I want to check the status and find out what I\'d need to provide if it was denied."</div><div style="font-size:11px;color:#5C4500;margin-top:8px;font-style:italic">That sentence is complete. You don\'t have to know everything to dial.</div></div>`, btns:['Copy + read aloud','What will they ask?','Make it an email'], prompt:`"I need to [hard thing]. I've been avoiding it because [reason]. Script my opening line.` },
-  ]},
-  { id:'sundayreset', name:'Sunday Reset', color:'#1D9E75', desc:'Set up the week before it starts', widgets:[
-    { num:'01', name:'Week at a Glance', one:'Dump the week. Get the map back.', output:`<div style="font-size:12px;line-height:1.9;color:#2C2C2A"><div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px dashed #E8E6E0"><span style="font-weight:700;color:#1D9E75;min-width:32px">Mon</span><span>Twins speech 3pm</span></div><div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px dashed #E8E6E0;background:#FEF9E7"><span style="font-weight:700;color:#F59E0B;min-width:32px">Thu</span><span>B concert night ★ busy</span></div><div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px dashed #E8E6E0"><span style="font-weight:700;color:#1D9E75;min-width:32px">Fri</span><span>Lightest day - protect it</span></div><div style="display:flex;gap:8px;padding:4px 0"><span style="font-weight:700;color:#1D9E75;min-width:32px">Sat</span><span>Birthday party 10am, all 3 kids</span></div></div>`, btns:['Use this','Add something','Which days need help?'], prompt:`"Here's everything I know about this week: [dump]. Sort by day. Flag the busy ones.` },
-    { num:'02', name:'Meal Plan + Grocery List', one:'Five dinners planned, one list generated.', output:`<div style="font-size:12px;line-height:1.9"><div style="display:flex;gap:8px"><span style="font-weight:700;color:#1D9E75;min-width:32px">Mon</span><span>Sheet pan chicken</span></div><div style="display:flex;gap:8px"><span style="font-weight:700;color:#1D9E75;min-width:32px">Tue</span><span>Tacos</span></div><div style="display:flex;gap:8px"><span style="font-weight:700;color:#1D9E75;min-width:32px">Wed</span><span>Pasta (twins: plain, rest: with sauce)</span></div><div style="display:flex;gap:8px"><span style="font-weight:700;color:#1D9E75;min-width:32px">Thu</span><span>MIL dinner - pot roast</span></div><div style="display:flex;gap:8px"><span style="font-weight:700;color:#1D9E75;min-width:32px">Fri</span><span>Takeout ✓</span></div></div>`, btns:['Copy grocery list','Swap a night','Organize by aisle'], prompt:`"Plan 5 dinners. Constraints: [kid stuff, what I have, special nights]. Give me one grocery list.` },
-    { num:'03', name:'Partner Briefing', one:'The whole week, briefed and sent.', output:`<div style="background:#DCF8C6;border-radius:12px 12px 12px 4px;padding:12px 14px;font-size:12px;color:#1A3A22;line-height:1.7">Hey, this week: Mon + Wed twins speech at 3 (I\'m grabbing them). Thu is B\'s concert, you\'re on dinner with the twins. Sat birthday party 10am, all 3 kids. Tuesday is lightest, you could schedule your thing then.</div>`, btns:['Send this','Shorter','Assign his tasks'], prompt:`"Draft a weekly briefing for my partner. Kid schedule, what I need covered, what's theirs. Warm. Short.` },
-    { num:'07', name:'Save This Week', one:'One good thing before you reset it.', output:`<div style="background:#E1F5EE;border-radius:10px;padding:14px 16px"><div style="font-size:14px;font-weight:600;color:#085041;line-height:1.6">"J told me that clouds are just fog that got too confident. I want to remember that forever."</div><div style="font-size:11px;color:#1D9E75;margin-top:8px;font-style:italic">Saved to your running list.</div></div>`, btns:['Save this','Add to running list','Share it'], prompt:`"Help me capture one good moment from this week before I move on. [what happened]. Write it so I'll remember it.` },
-  ]},
-  { id:'evening', name:'Evening Wind Down', color:'#8B6FE8', desc:'Brain tabs open. Let\'s close them.', widgets:[
-    { num:'01', name:'Tomorrow Preview', one:'Just enough so 6am-you isn\'t blindsided.', output:`<div style="font-size:13px;line-height:1.8;color:#2C2C2A"><div>7:45 school drop-off</div><div>10am work call</div><div style="font-weight:600;color:#8B6FE8">Prep tonight: sign B\'s form, pack gym bag</div><div style="font-size:11px;color:#888780;margin-top:6px;font-style:italic">That\'s it. Go to bed.</div></div>`, btns:['Good enough','What am I forgetting?','Anything to prep tonight?'], prompt:`"What's tomorrow? Give me the short version. Only tell me what I need to prep tonight.` },
-    { num:'04', name:'What Went Well Today', one:'Not journaling. Not gratitude practice. Just honest.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;font-size:12.5px;color:#2D1A7A">Made dinner and nobody cried at homework time.</div><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;font-size:12.5px;color:#2D1A7A">Actually went to the dentist. That\'s been sitting there 3 months.</div><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;font-size:12.5px;color:#2D1A7A">R laughed at dinner. Not performed, actually laughed.</div></div><div style="font-size:12px;color:#888780;font-style:italic;margin-top:10px">"Today felt like a mess" and "today had three real wins" can both be true. They usually are.</div>`, btns:['Save this','Tell me more','It really was bad (hold that)'], prompt:`"Today felt like a mess. Here's what happened: [dump]. Find the wins. Don't be fake about it.` },
-    { num:'06', name:'Shutdown Script', one:'Brain won\'t close. Four steps and it does.', output:`<div style="display:flex;flex-direction:column;gap:8px;font-size:13px"><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;display:flex;align-items:center;gap:10px"><span style="font-weight:700;color:#8B6FE8;font-size:16px">01</span><span>Brain inbox: emptied ✓</span></div><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;display:flex;align-items:center;gap:10px"><span style="font-weight:700;color:#8B6FE8;font-size:16px">02</span><span>Tomorrow: previewed ✓</span></div><div style="background:#EEEAFC;border-radius:8px;padding:10px 13px;display:flex;align-items:center;gap:10px"><span style="font-weight:700;color:#8B6FE8;font-size:16px">03</span><span>No texts to send ✓</span></div><div style="background:#E8D44D;border-radius:8px;padding:10px 13px;font-size:13px;font-weight:800;color:#3D3000">Okay. Closing.</div></div>`, btns:['Okay. Closing.','One more thing','I can\'t sleep'], prompt:`"Run my shutdown script. Confirm: brain inbox done, tomorrow previewed, no texts to send. Tell me I'm done.` },
-  ]},
-  { id:'lowspoons', name:'Low Spoons Day', color:'#D85A30', desc:'Survival mode only. No judgment, no extras.', widgets:[
-    { num:'01', name:"Today\'s Triage", one:'Your day collapsed. Get the survival version.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#FEF3F3;border:.5px solid rgba(216,90,48,.3);border-radius:8px;padding:10px 12px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#5C2211;margin-bottom:6px">Move to later</div><div style="font-size:12px;color:#5F5E5A">📅 Dentist 1pm<br>📅 Speech therapy 3pm<br>📅 Grocery pickup</div></div><div style="background:#F0FAF4;border:.5px solid rgba(29,158,117,.3);border-radius:8px;padding:10px 12px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#085041;margin-bottom:5px">Keep</div><div style="font-size:12px;color:#5F5E5A">School pickup, normal time</div></div><div style="background:#FAEEDA;border:.5px solid rgba(186,117,23,.25);border-radius:8px;padding:10px 12px;font-size:12px;font-weight:700;color:#2C2C2A">Your only job today is <span style="background:#D85A30;color:#fff;border-radius:100px;padding:1px 8px">keeping everyone alive</span> and <span style="background:#D85A30;color:#fff;border-radius:100px;padding:1px 8px">reasonably hydrated.</span></div></div>`, btns:['Use this plan','Even less','Send cancel messages'], prompt:`"Low spoons day. Here's what was planned: [dump]. What do I cancel, keep, and maybe?` },
-    { num:'02', name:'"Not Today" Messages', one:'School, work, dentist. All at once.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#F0F8FF;border-radius:8px;padding:9px 12px;border:.5px solid #B5D4F4"><div style="font-size:9px;font-weight:700;color:#185FA5;text-transform:uppercase;margin-bottom:4px">iMessage - School</div><div style="background:#378ADD;color:#fff;border-radius:10px 10px 10px 3px;padding:8px 11px;font-size:12px;display:inline-block">Home sick today. See you tomorrow.</div></div><div style="background:#F5F5F0;border-radius:8px;padding:9px 12px;border:.5px solid #E8E6E0"><div style="font-size:9px;font-weight:700;color:#3B6D11;text-transform:uppercase;margin-bottom:4px">Email - Dentist</div><div style="font-size:12px;color:#3D3430">Need to reschedule today\'s 1pm. Next availability?</div></div></div>`, btns:['Copy all','Add one more'], prompt:`"I need to cancel: [list]. Draft all the messages at once. Short.` },
-    { num:'05', name:'Low-Effort Dinner', one:'This counts as dinner. Yes it does. Stop.', output:`<div style="background:#FAEEDA;border:1.5px solid #FAC775;border-radius:10px;padding:12px 14px;margin-bottom:10px"><div style="font-size:14px;font-weight:800;color:#5C3A09">⚠ This counts as dinner. Yes it does. Stop.</div></div><div style="font-size:12px;color:#5F5E5A;line-height:1.8"><div>Frozen pizza + apple slices</div><div>Sick kid: crackers + PB + Gatorade</div></div>`, btns:['Good enough','Just order food','Partner pickup?'], prompt:`"Low spoons dinner. I have: [stuff]. Can't cook. What's the easiest option?` },
-  ]},
-  { id:'dumpster', name:'Emotional Dumpster Fire', color:'#C4427A', desc:'Shame spiral, RSD, overwhelm, crying in the car.', widgets:[
-    { num:'01', name:"Name What\'s Happening", one:"You feel like garbage. You don\'t know why.", output:`<div style="display:flex;flex-direction:column;gap:10px"><div style="font-size:14px;font-weight:600;color:#2C2C2A;line-height:1.5">You\'re not upset about one thing. You\'re in sensory + emotional overload from sleep debt + task pile-up.</div><div style="display:flex;gap:6px;flex-wrap:wrap"><span style="background:#FBEAF0;color:#4B1528;border:.5px solid rgba(196,66,122,.3);border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">sleep debt</span><span style="background:#FBEAF0;color:#4B1528;border:.5px solid rgba(196,66,122,.3);border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">task pile-up</span><span style="background:#FBEAF0;color:#4B1528;border:.5px solid rgba(196,66,122,.3);border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">overflow anger</span></div><div style="font-size:15px;font-weight:800;color:#C4427A">This is a body problem,<br>not a life problem.</div></div>`, btns:['What do I do?','Tell me more','Just validate me'], prompt:`"I feel terrible and I don't know why. Here's everything in my head: [dump]. Help me name it.` },
-    { num:'02', name:"The Text You Won\'t Send", one:'Write the real one. Get it out. Then the safe one.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#FBEAF0;border:1px solid rgba(196,66,122,.2);border-radius:8px;padding:10px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#C4427A;margin-bottom:4px">The real one (private)</div><div style="font-size:12px;color:#4B1528;font-style:italic">You always undermine me in front of the kids and I\'m tired of pretending it\'s fine.</div></div><div style="background:#F0FDF4;border:1px solid rgba(29,158,117,.2);border-radius:8px;padding:10px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#1D9E75;margin-bottom:4px">The sendable one</div><div style="font-size:12px;color:#085041">Hey, can we talk about something that\'s been on my mind? Want to find a good time this week.</div></div></div>`, btns:['Save the real one','Send the safe one','Not tonight'], prompt:`"Here's what I want to say to [person]: [real version]. Tell me what I'm actually feeling, then write a version I could send.` },
-    { num:'06', name:'Regulate First, Decide Later', one:"You want to quit. You might be right. But not right now.", output:`<div style="display:flex;flex-direction:column;gap:10px"><div style="font-size:18px;font-weight:800;color:#C4427A">First: you might be right.</div><div style="background:#FFF;border:1.5px solid #E8E6E0;border-radius:8px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12.5px;font-weight:600">Have you eaten in the last 4 hours?</span><div style="display:flex;gap:6px"><button style="background:#D1FAE5;color:#065F46;border:1.5px solid rgba(16,185,129,.3);border-radius:100px;padding:4px 12px;font-size:11px;font-weight:700">YES</button><button style="background:#FEE2E2;color:#7F1D1D;border:1.5px solid rgba(220,38,38,.2);border-radius:100px;padding:4px 12px;font-size:11px;font-weight:700">NO</button></div></div><div style="background:#E8D44D;border-radius:8px;padding:11px 14px;font-size:12.5px;font-weight:700;color:#3D3000">The decision will still be there tomorrow. Your brain will be better equipped to make it.</div></div>`, btns:['Revisit tomorrow','It IS real, think it through','What would it actually take?'], prompt:`"I want to [big decision]. Am I regulated enough to decide this right now? Ask me 3 questions first.` },
-  ]},
-  { id:'hardthings', name:'We Can Do Hard Things', color:'#A3D130', desc:'The call you\'ve been dreading. Scripted and ready.', widgets:[
-    { num:'01', name:'Script the Opener', one:'The first 10 seconds are the hardest.', output:`<div style="background:#EEF9D6;border:1.5px solid rgba(163,209,48,.3);border-radius:10px;padding:14px 16px;margin-bottom:10px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#A3D130;margin-bottom:7px;font-family:'IBM Plex Mono',monospace">Opening line</div><div style="font-size:15px;font-weight:700;color:#3A5200;line-height:1.45">"Hi, I wanted to talk about something I\'ve been thinking about. I want to make sure we\'re solving the right problem together. Can we talk through what you\'re seeing?"</div><div style="font-size:11px;color:#3A5200;font-style:italic;margin-top:10px;padding-top:10px;border-top:1px dashed rgba(163,209,48,.3)">You\'re inviting them into problem-solving, not accusing. That framing is the whole strategy.</div></div>`, btns:['Copy + read aloud','Make it firmer','Make it softer','Make it an email'], prompt:`"I need to talk to [person] about [situation]. I don't want to come across as [fear]. Script my opening line. Keep it collaborative.` },
-    { num:'03', name:'The "I Don\'t Know" Line', one:'The magic sentence for on-the-spot moments.', output:`<div style="background:#E8D44D;border-radius:10px;padding:18px 20px"><div style="font-size:18px;font-weight:800;color:#3D3000;line-height:1.35">"I don\'t know — can you tell me what I\'d need to find out?"</div><div style="font-size:12px;color:#5C4500;margin-top:8px;line-height:1.5">That sentence is complete. It is dignified. It hands the problem back to the person who has the answer.</div><div style="font-size:11px;color:#7A6000;font-style:italic;margin-top:8px">Works on: doctors, teachers, insurance, HR, your mother-in-law</div></div>`, btns:['Write it on a Post-it','3 variations'], prompt:`"Give me 3 ways to say I don't know without sounding unprepared. One warm, one professional, one firm.` },
-    { num:'06', name:'Partner Briefing', one:'Hand it off with a script they can actually use.', output:`<div style="background:#DCF8C6;border-radius:14px 14px 14px 4px;padding:13px 15px;font-size:12.5px;color:#1A3A22;line-height:1.65">Hey, can you handle the insurance call about the speech coverage? Here\'s what to say: "Hi, I\'m calling to confirm sessions covered this year and whether prior auth is required." If they ask something you don\'t know: "I don\'t have that, what would I need to provide?" Deadline: before Friday.</div>`, btns:['Send this','Make it softer','Add more context'], prompt:`"I need my partner to handle [task]. Draft the ask AND a script for them. Deadline: [when].` },
-  ]},
-  { id:'kidstuff', name:'Kid Stuff', color:'#0B8FA6', desc:'School, IEPs, teachers, forms.', widgets:[
-    { num:'01', name:'Teacher Email Draft', one:'Advocate without sounding like That Parent.', output:`<div style="background:#E0F5FA;border-radius:8px;padding:11px 14px;margin-bottom:10px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#0B8FA6;margin-bottom:5px;font-family:'IBM Plex Mono',monospace">Draft</div><div style="font-size:12.5px;color:#065A6B;line-height:1.6">Hi [Teacher], I wanted to reach out about something I\'ve been noticing at home. I\'d love to hear what you\'re seeing on your end and think through what might help. Would you have 10 minutes this week?</div><div style="font-size:11px;color:#0B8FA6;font-style:italic;margin-top:8px">You\'re inviting them into problem-solving, not accusing anyone of getting it wrong.</div></div>`, btns:['Send this','Make it firmer','Request a meeting'], prompt:`"I need to email [teacher] about [issue] with my kid. I want to be collaborative, not confrontational. Draft it.` },
-    { num:'02', name:'IEP Prep + Questions', one:'Meeting Thursday. Brain hasn\'t started.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#fff;border:1.5px solid #E8E6E0;border-radius:8px;padding:10px 13px"><div style="font-size:10px;font-weight:700;color:#0B8FA6;margin-bottom:4px">Q1</div><div style="font-size:12.5px;color:#2C2C2A">"What data are you using to measure progress on sensory regulation?"</div></div><div style="background:#fff;border:1.5px solid #E8E6E0;border-radius:8px;padding:10px 13px"><div style="font-size:10px;font-weight:700;color:#0B8FA6;margin-bottom:4px">Q2</div><div style="font-size:12.5px;color:#2C2C2A">"Can we discuss a sensory accommodation before adding a behavior plan?"</div></div><div style="background:#FAEEDA;border:1.5px solid #FAC775;border-radius:8px;padding:9px 12px;font-size:12px;color:#5C3A09">⚠ Your right: you can request any accommodation in writing at any time. You don\'t have to wait for the annual review.</div></div>`, btns:['Screenshot these','More questions','What are my rights?','What if they say no?'], prompt:`"IEP meeting for [kid, diagnosis, age]. I want [goals]. What questions should I ask? What are my rights if they push back?` },
-    { num:'04', name:'Activity Command Center', one:'Cheer, tennis, baseball, baseball.', output:`<div style="font-size:12px;line-height:1.9"><div style="display:flex;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px dashed #E8E6E0"><span style="font-weight:700;min-width:32px;color:#0B8FA6">Mon</span><span>Cheer 5-7, Baseball 5:30 <span style="background:#FEF2F2;color:#991B1B;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700">2 drivers</span></span></div><div style="display:flex;gap:8px;align-items:baseline;padding:3px 0;border-bottom:1px dashed #E8E6E0"><span style="font-weight:700;min-width:32px;color:#0B8FA6">Tue</span><span>Tennis 4pm then Baseball 5:30 <span style="background:#FEF9E7;color:#7D5A00;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700">pack both bags AM</span></span></div><div style="display:flex;gap:8px;align-items:baseline;padding:3px 0"><span style="font-weight:700;min-width:32px;color:#0B8FA6">Sat</span><span>Cheer competition AM, game TBD</span></div></div>`, btns:['Save this','Send to partner','Solve the conflicts'], prompt:`"3 kids, here are their activities: [dump]. Map the week. Flag conflicts. Tell me what needs two drivers.` },
-  ]},
-  { id:'friendship', name:'Friendship Maintenance', color:'#E8399A', desc:'Keeping your people without losing your mind.', widgets:[
-    { num:'01', name:"Who Haven\'t I Talked To", one:'The guilt list. Turned into an action list.', output:`<div style="display:flex;flex-direction:column;gap:7px"><div style="display:flex;align-items:center;gap:10px;background:#F0FDF4;border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:9px 12px"><div style="width:9px;height:9px;border-radius:50%;background:#16A34A;flex-shrink:0"></div><div style="font-size:12.5px;color:#2C2C2A"><strong>Robin</strong> - talked yesterday. Good.</div></div><div style="display:flex;align-items:center;gap:10px;background:#FFFBF0;border:1px solid rgba(186,117,23,.2);border-radius:8px;padding:9px 12px"><div style="width:9px;height:9px;border-radius:50%;background:#F59E0B;flex-shrink:0"></div><div style="font-size:12.5px;color:#2C2C2A"><strong>Keisha</strong> - texted last week. Fine.</div></div><div style="display:flex;align-items:center;gap:10px;background:#FEF2F2;border:1px solid rgba(220,38,38,.15);border-radius:8px;padding:9px 12px"><div style="width:9px;height:9px;border-radius:50%;background:#DC2626;flex-shrink:0"></div><div style="font-size:12.5px;color:#2C2C2A"><strong>Lex</strong> - a month. Send today.</div></div></div>`, btns:['Text Lex now','Am I a bad friend or is this normal?'], prompt:`"My close friends are [names]. Last contact: [rough estimates]. Who should I reach out to?` },
-    { num:'02', name:'"Just Thinking of You" Text', one:'"Hey" feels weird after 3 weeks. This doesn\'t.', output:`<div style="background:#DCF8C6;border-radius:14px 14px 14px 4px;padding:12px 16px;font-size:13px;color:#1A3A22;line-height:1.6;display:inline-block;max-width:95%">Hey! I\'ve been meaning to text you. How\'s the new job going? I want to hear everything. Catch up this week or next?</div><div style="font-size:11px;color:#888780;font-style:italic;margin-top:8px">No apology for the gap. Just warmth and a specific thing you remembered.</div>`, btns:['Send this','More casual','Funnier'], prompt:`"Draft a reach-out text to [name]. It's been [time]. Their latest thing is [context]. Warm, not groveling.` },
-    { num:'07', name:'"We Should Hang" — Actually Plan It', one:"You\'ve both said it 4 times. Do it now.", output:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div style="background:#fff;border:1px solid #E8E6E0;border-radius:8px;padding:11px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#888;margin-bottom:5px">The plan</div><div style="font-size:12px;color:#2C2C2A;line-height:1.6">Saturday brunch, 10am. Somewhere in the middle. No kids. 20 min from both.</div></div><div style="background:#FBEAF3;border:1px solid rgba(232,57,154,.2);border-radius:8px;padding:11px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#9C1F5C;margin-bottom:5px">The text</div><div style="font-size:12px;color:#4B0A28;line-height:1.6">"Ok I\'m actually doing it. Brunch Saturday 10am? I\'ll pick the spot. You just show up."</div></div></div>`, btns:['Send the text','Pick the spot','Kid-friendly version'], prompt:`"I want to actually see [name]. Constraints: [kids, distance, schedules]. Plan it and draft the text that locks it in.` },
-  ]},
-  { id:'textavoiding', name:"The Text You\'ve Been Avoiding", color:'#4A3560', desc:'RSD central. Probably the most-flipped-to stack.', widgets:[
-    { num:'01', name:'Sort This Text Thread', one:"You opened it 9 times. Find out what they actually want.", output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#fff;border:1.5px solid #E8E6E0;border-radius:8px;padding:11px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#6B5A90;margin-bottom:5px;font-family:'IBM Plex Mono',monospace">What they\'re actually asking</div><div style="font-size:12.5px;color:#2C2C2A;line-height:1.5">1. Can you bring a side dish Saturday<br>2. What time are you arriving<br>3. Is your kid allergic to anything</div></div><div style="background:#EDEAF5;border:1.5px solid rgba(74,53,96,.2);border-radius:8px;padding:11px 13px"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#4A3560;margin-bottom:4px;font-family:'IBM Plex Mono',monospace">The vibe</div><div style="font-size:13px;color:#1A1230;font-weight:600">Not mad. Not passive aggressive. Just planning and slightly frantic.</div></div></div>`, btns:['Draft the reply','Is there anything PA I missed?'], prompt:`"Here's a text thread. Tell me what they actually want, what the vibe is, and draft a reply.` },
-    { num:'03', name:'Is This Actually Passive Aggressive?', one:'Your RSD says yes. Let\'s check.', output:`<div style="display:flex;flex-direction:column;gap:10px"><div style="display:inline-flex;align-items:center;gap:8px;background:#F0FDF4;border:2px solid #16A34A;border-radius:100px;padding:7px 16px"><div style="width:10px;height:10px;border-radius:50%;background:#16A34A"></div><div style="font-size:13px;font-weight:800;color:#065F46;text-transform:uppercase;letter-spacing:.06em">Probably fine</div></div><div style="font-size:13px;color:#3D3430;line-height:1.6">Two exclamation points is enthusiastic, not bitter. People who are genuinely mad don\'t usually respond this fast or this warmly.</div><div style="background:#EDEAF5;border:1px solid rgba(74,53,96,.2);border-radius:8px;padding:10px 13px;font-size:12px;color:#1A1230">The 2% chance it\'s PA: only if you\'ve canceled on them 3+ times recently.</div></div>`, btns:['Reply normally, they meant it','What if I have canceled a lot?'], prompt:`"Is this text passive aggressive or am I reading into it? Be honest. [paste text]` },
-    { num:'07', name:"Send It or Don\'t", one:'Your thumb is hovering. Ask before you tap.', output:`<div style="background:#EDEAF5;border:2px solid #4A3560;border-radius:10px;padding:14px 16px;text-align:center;margin-bottom:10px"><div style="font-size:20px;font-weight:800;color:#1A1230;margin-bottom:6px">Wait til morning.</div><div style="font-size:13px;color:#6B5A90;line-height:1.5">Written while activated. The core message is valid but the edges are sharp.</div></div><div style="background:#E8D44D;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:700;color:#3D3000">Tomorrow-you will thank you for waiting.</div>`, btns:['Send it as-is','Send the softer edit','Wait til morning',"Don\'t send"], prompt:`"I'm about to send this. [paste draft] Should I send it, edit it, wait, or not send it? Be honest.` },
-  ]},
-  { id:'postsocial', name:'Post-Social Recovery', color:'#97C459', desc:'You did the thing. Now decompress.', widgets:[
-    { num:'01', name:"Did I Say Something Weird?", one:"You\'re in the car replaying the last 3 hours.", output:`<div style="display:flex;flex-direction:column;gap:10px"><div style="display:inline-flex;align-items:center;gap:8px;background:#F0FDF4;border:2px solid #16A34A;border-radius:100px;padding:7px 16px"><div style="width:10px;height:10px;border-radius:50%;background:#16A34A"></div><div style="font-size:13px;font-weight:800;color:#065F46;text-transform:uppercase;letter-spacing:.06em">Probably fine</div></div><div style="font-size:13px;color:#3D3430;line-height:1.6">Sharing that context came up naturally. The quiet mom probably just ran out of conversation, not a reaction to you.</div><div style="background:#EAF3DE;border-radius:8px;padding:9px 12px;font-size:12px;color:#173404">You were present for 3 hours. That\'s what the evening was.</div></div>`, btns:['Okay, letting it go','But what if...','Should I text her?'], prompt:`"I just left [event]. I said [thing]. One person [reacted this way]. Was it weird or is my brain doing the thing? Be honest.` },
-    { num:'02', name:'Replay Loop Interrupter', one:'Same 45 seconds. On repeat. For 2 hours.', output:`<div style="font-size:16px;font-weight:800;color:#3B6D11;line-height:1.3;margin-bottom:14px">You interrupted once. She continued her story. You are replaying 3 seconds out of a 3-hour evening where you showed up, talked, laughed, and were present.</div><div style="background:#E8D44D;border-radius:8px;padding:12px 14px;font-size:13px;font-weight:700;color:#3D3000">The loop is replaying the 3 seconds, not the 3 hours.</div>`, btns:['Okay. Letting go.','Still looping, give me something else','Should I apologize?'], prompt:`"I can't stop replaying [moment]. It's been [time]. Break the loop. Be real with me.` },
-    { num:'06', name:'Permission to Be Done', one:"You socialized. You\'re depleted. Stop.", output:`<div style="font-size:18px;font-weight:800;color:#3B6D11;margin-bottom:14px">Here\'s what actually needs to happen tonight: Nothing.</div><div style="display:flex;flex-direction:column;gap:6px;font-size:13px;color:#888780"><div>The kitchen will be there tomorrow. ✓</div><div>Lunches take 7 minutes in the morning. ✓</div><div>The emails are not emergencies or they\'d have been phone calls. ✓</div></div>`, btns:['Okay. I\'m done.','One small thing first','I feel guilty about stopping'], prompt:`"I just socialized and I'm empty. Here's what I think I should still do: [list]. Tell me what actually needs to happen tonight.` },
-  ]},
-  { id:'familyvault', name:'Family Vault', color:'#2A7A8C', desc:'The long memory. Everything only in your head, finally written down.', widgets:[
-    { num:'01', name:'Safe Foods by Person', one:'What each person will actually eat on a hard day.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#fff;border:.5px solid #E8E6E0;border-radius:8px;overflow:hidden"><div style="background:#E0F2F7;padding:7px 11px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2A7A8C"></div><span style="font-size:12px;font-weight:700;color:#0E3D47">R - 10</span></div><div style="padding:8px 11px;font-size:11.5px;color:#3D3430;line-height:1.7">Safe: plain pasta (no sauce), PB crackers, cheese, Gatorade<br>Hard day: crackers + PB only<br>No: mixed textures, sauce on pasta</div></div><div style="background:#fff;border:.5px solid #E8E6E0;border-radius:8px;overflow:hidden"><div style="background:#E0F2F7;padding:7px 11px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:#2A7A8C"></div><span style="font-size:12px;font-weight:700;color:#0E3D47">J - 10</span></div><div style="padding:8px 11px;font-size:11.5px;color:#3D3430;line-height:1.7">Safe: pizza, grilled cheese, cereal, apples<br>No: strong spices, slimy textures</div></div></div>`, btns:['Update a person','What can everyone eat?'], prompt:`"Update safe foods for [name]. New safe foods: [list]. Remove: [list]. Note: [anything else].` },
-    { num:'05', name:'Family Favorites', one:'Movies nobody complains about. Restaurants that work.', output:`<div style="display:flex;flex-direction:column;gap:8px"><div style="background:#fff;border:.5px solid #E8E6E0;border-radius:8px;overflow:hidden"><div style="background:#E0F2F7;padding:6px 11px;font-size:9px;font-weight:700;text-transform:uppercase;color:#0E3D47">Movies everyone watches</div><div style="padding:8px 11px;display:flex;gap:6px;flex-wrap:wrap"><span style="background:#E0F2F7;color:#0E3D47;border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">Totoro ✓</span><span style="background:#E0F2F7;color:#0E3D47;border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">Bluey ✓</span><span style="background:#E0F2F7;color:#0E3D47;border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">Pokémon ✓</span></div></div><div style="background:#fff;border:.5px solid #E8E6E0;border-radius:8px;overflow:hidden"><div style="background:#E0F2F7;padding:6px 11px;font-size:9px;font-weight:700;text-transform:uppercase;color:#0E3D47">Restaurants, no complaints</div><div style="padding:8px 11px;display:flex;gap:6px;flex-wrap:wrap"><span style="background:#E0F2F7;color:#0E3D47;border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">Chipotle ✓</span><span style="background:#E0F2F7;color:#0E3D47;border-radius:100px;padding:3px 9px;font-size:11px;font-weight:600">Five Guys ✓</span></div></div></div>`, btns:['Add a favorite','What can everyone watch?','Where can we eat?'], prompt:`"Add to Family Favorites: [category]. What it is: [name]. Why it works: [note]. Who likes it: [everyone or specific people].` },
-    { num:'06', name:'Ask the Vault', one:"Your family\'s memory, queryable.", output:`<div style="display:flex;flex-direction:column;gap:10px"><div style="background:#E0F2F7;border:1.5px solid rgba(42,122,140,.3);border-radius:10px;padding:12px 14px"><div style="font-size:13px;color:#0E3D47;font-style:italic;margin-bottom:7px">"What are R\'s safe foods again?"</div><div style="font-size:13px;font-weight:600;color:#2C2C2A">R: plain pasta (no sauce), PB crackers, cheese, Gatorade. Hard day: crackers + PB only. No mixed textures.</div><div style="font-size:10px;color:#2A7A8C;margin-top:5px;font-family:'IBM Plex Mono',monospace">from: Safe Foods by Person</div></div><div style="background:#F1EFE8;border-radius:8px;padding:9px 12px;font-size:11px;color:#888780;text-align:center;font-style:italic">Answers from your vault, not from general knowledge.</div></div>`, btns:['Ask a question','What do we know about [name]?','What needs updating?'], prompt:`"[Question about your family]. Answer from my vault only, not from general knowledge.` },
-  ]},
-];
+var curWiki='you', curWikiTab='Overview', curBrain='kids';
+var ohtDone=false, dinnerDone=false, pbDone=false, dinnerChoice=1;
 
-const ALL_WIDGETS_FLAT = [];
-HUBS.forEach(h => {
-  h.widgets.forEach(w => {
-    ALL_WIDGETS_FLAT.push({ ...w, hubName: h.name, hubColor: h.color, hubId: h.id });
-  });
-});
+function go(n){
+  var screens=document.querySelectorAll('.sc');
+  for(var i=0;i<screens.length;i++) screens[i].classList.remove('on');
+  var s=document.getElementById('s'+n);
+  if(s){s.classList.add('on'); document.getElementById('pi').scrollTop=0;}
+  var btns=document.querySelectorAll('.sb');
+  for(var i=0;i<btns.length;i++) btns[i].classList.toggle('on', i===n-1);
+  if(n===7){
+    var lo=document.getElementById('oht-load'), af=document.getElementById('oht-done');
+    if(lo)lo.style.display='block'; if(af)af.style.display='none';
+    setTimeout(function(){if(lo)lo.style.display='none';if(af)af.style.display='block';},1800);
+  }
+  if(n===8){
+    setTimeout(function(){
+      for(var i=1;i<=3;i++){var el=document.getElementById('d'+i);if(el)el.classList.toggle('rec',i===dinnerChoice);}
+      var act=document.getElementById('dinner-action');
+      if(act)act.style.display=dinnerChoice>0?'block':'none';
+    },50);
+  }
+  if(n===5||n===6){
+    var inp=document.getElementById('hard-thing-input');
+    var val=inp&&inp.value.trim();
+    if(val){
+      var prev=document.getElementById('oht-preview');
+      if(prev)prev.textContent=val+' →';
+      var s6=document.getElementById('oht-task-s6');
+      if(s6)s6.textContent=val;
+    }
+  }
+  if(n===12)renderBrain(curBrain);
+  if(n===13)renderWiki(curWiki,curWikiTab);
+}
 
-// ── COMMUNITY STACKS ─────────────────────────────────────
-const STACKS = [
-  {
-    name: 'The Grief Stack', tag: 'Community', tagColor: '#C4427A', tagBg: '#FBEAF0',
-    author: 'shared by @spoonie_mama', forks: 127,
-    desc: 'For navigating hard days when you\'re also carrying grief.',
-    widgets: ["Today's Triage", "Name What's Happening", "Regulate First, Decide Later", "Permission to Be Done", "Low-Effort Dinner"]
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2400);
+}
+function showToast(msg){toast(msg);}
+
+function openModal(id){var m=document.getElementById('modal-'+id);if(m)m.classList.add('on');}
+function closeModal(id){var m=document.getElementById('modal-'+id);if(m)m.classList.remove('on');}
+
+function tapChip(el,label){
+  var chips=document.querySelectorAll('#lp .chip');
+  for(var i=0;i<chips.length;i++)chips[i].classList.remove('on');
+  el.classList.add('on');
+  document.getElementById('custom-anchor').value='';
+}
+
+function doUnlock(){
+  var inp=document.getElementById('custom-anchor');
+  var chip=document.querySelector('#lp .chip.on');
+  var label=(inp&&inp.value.trim())||(chip&&chip.textContent)||'your anchor';
+  var lp=document.getElementById('lp');
+  lp.querySelector('.cb').style.background='var(--green)';
+  lp.querySelector('.cbody').innerHTML='<div class="ct" style="color:var(--green)">🚀 The Launching Pad</div>'
+    +'<div style="background:var(--green-pale);border-radius:12px;padding:16px;text-align:center;margin-top:8px">'
+    +'<div style="font-size:24px;margin-bottom:6px">✓</div>'
+    +'<div style="font-size:13px;font-weight:600;color:var(--green);margin-bottom:3px">Stack unlocked</div>'
+    +'<div style="font-size:11px;color:var(--ink-soft);line-height:1.4"><em>'+label+'</em> — that is your anchor for today. Your stack is ready below.</div>'
+    +'</div>';
+  setTimeout(function(){
+    var ids=['oht-card','dd-card','pb-card'];
+    for(var i=0;i<ids.length;i++){
+      var el=document.getElementById(ids[i]);
+      if(el){el.style.opacity='1';el.style.pointerEvents='auto';}
+    }
+    toast('Stack unlocked — 3 widgets ready');
+  },350);
+}
+
+function completeOHT(){
+  toast('Copied!');
+  ohtDone=true;
+  setTimeout(function(){
+    go(6);
+    var c=document.getElementById('oht-card');
+    if(c)c.outerHTML='<div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">One Hard Thing</div><div class="done-m">Copied · 1 insight saved · 9:14am</div></div><div class="done-ck">✓</div></div></div>';
+    checkAllDone();
+  },600);
+}
+
+function pickDinner(el,n){go(n);}
+
+function selectD(n){
+  dinnerChoice=n;
+  for(var i=1;i<=3;i++){var el=document.getElementById('d'+i);if(el)el.classList.toggle('rec',i===n);}
+  var act=document.getElementById('dinner-action');
+  if(act)act.style.display='block';
+}
+
+function completeDinner(){
+  var names=['Pasta + butter','Sheet pan chicken','Quesadillas'];
+  var name=names[dinnerChoice-1]||'Pasta + butter';
+  toast('Dinner locked in!');
+  dinnerDone=true;
+  setTimeout(function(){
+    go(6);
+    var c=document.getElementById('dd-card');
+    if(c)c.outerHTML='<div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">Dinner Decider</div><div class="done-m">'+name+' locked in · 9:18am</div></div><div class="done-ck">✓</div></div></div>';
+    checkAllDone();
+  },600);
+}
+
+function makeFunnier(){
+  var b=document.getElementById('pb-bubble');
+  if(b){
+    b.style.opacity='0';
+    setTimeout(function(){
+      b.textContent="Heyyy chaos update — twins speech Mon+Wed I got it, Marcus no-bus Fri pickup 2:45, can you do dinner Thu?? CVS: DONE you're welcome";
+      b.style.opacity='1';
+      toast('Funnier version ready!');
+    },300);
+  }
+}
+
+function makeFunnierS6(){
+  var b=document.getElementById('pb-bubble-s6');
+  if(b){
+    b.style.opacity='0';
+    setTimeout(function(){
+      b.textContent="Heyyy chaos update — twins speech Mon+Wed I got it, Marcus no-bus Fri pickup 2:45, can you do dinner Thu?? CVS: DONE you're welcome";
+      b.style.opacity='1';
+      toast('Funnier version!');
+    },300);
+  }
+}
+
+function savePBEdit(){
+  var txt=document.getElementById('pb-edit-text');
+  var b1=document.getElementById('pb-bubble');
+  var b2=document.getElementById('pb-bubble-s6');
+  if(txt){
+    if(b1)b1.textContent=txt.value;
+    if(b2)b2.textContent=txt.value;
+    toast('Briefing updated!');
+  }
+  closeModal('edit-pb');
+}
+
+function completePB(){
+  toast('Partner Briefing sent!');
+  pbDone=true;
+  setTimeout(function(){
+    go(6);
+    var c=document.getElementById('pb-card');
+    if(c)c.outerHTML='<div class="done-card"><div class="done-bar"></div><div class="done-body"><div><div class="done-t">Partner Briefing</div><div class="done-m">Sent · 1 insight saved · 9:22am</div></div><div class="done-ck">✓</div></div></div>';
+    checkAllDone();
+  },600);
+}
+
+function checkAllDone(){
+  if(ohtDone&&dinnerDone&&pbDone)setTimeout(function(){go(10);},900);
+}
+
+function setBudget(el,level){
+  var pills=document.querySelectorAll('.bp');
+  for(var i=0;i<pills.length;i++)pills[i].classList.remove('on');
+  el.classList.add('on');
+  var msgs={High:'High energy — full stack active',Okay:'Okay energy — full stack active',Low:'Low energy — 3 essential widgets',Crisis:'Crisis mode — survival only'};
+  toast(msgs[level]||level);
+}
+
+var BDATA={
+  kids:{color:'var(--cyan)',label:'Kids',count:12,entries:[
+    {dom:'Kids - Zoe',txt:'Bus cancelled Thursdays + Fridays. Pickup by 2:45.',date:'Today'},
+    {dom:'Kids - Marcus',txt:'OT eval referral pending since March. Follow up with Dr. Park.',date:'3 days ago'},
+    {dom:'Kids - All',txt:'Speech therapy Mon + Wed at 3pm. Pickup from school.',date:'1 week ago'},
+    {dom:'Kids - Priya',txt:'IEP review coming up in June. Bring notes.',date:'2 weeks ago'}
+  ]},
+  partner:{color:'var(--hot-pink)',label:'Partner',count:4,entries:[
+    {dom:'Partner',txt:'Handles dinner Thursdays. Needs specific ask not open question.',date:'2 days ago'},
+    {dom:'Partner',txt:'Monthly check-in usually Sunday evenings.',date:'1 week ago'}
+  ]},
+  house:{color:'var(--gold)',label:'House',count:8,entries:[
+    {dom:'House',txt:'Gutters need cleaning — 3rd reminder cycle.',date:'3 weeks ago'},
+    {dom:'House',txt:'Back door lock sticks in cold weather — jiggle handle left.',date:'1 month ago'}
+  ]},
+  health:{color:'var(--coral)',label:'Health',count:6,entries:[
+    {dom:'Health - You',txt:'Vyvanse prior auth pending at CVS. Call 1-800-CVS-HELP.',date:'Today'},
+    {dom:'Health - Marcus',txt:'OT referral submitted March 2025. No response yet.',date:'2 months ago'},
+    {dom:'Health - Zoe',txt:'Annual physical overdue. Schedule with Dr. Chen.',date:'3 weeks ago'}
+  ]},
+  social:{color:'var(--purple)',label:'Social',count:9,entries:[
+    {dom:'Social',txt:"Robin birthday was last Tuesday. Text her.",date:'1 week ago'},
+    {dom:'Social',txt:'Lex new job started. Last talked 6 weeks ago.',date:'2 weeks ago'}
+  ]},
+  you:{color:'var(--lime)',label:'You',count:7,entries:[
+    {dom:'You',txt:'Morning anchor: kettle on before engaging with anyone.',date:'3 days ago'},
+    {dom:'You',txt:'Vyvanse refill needed — prior auth in progress.',date:'Today'}
+  ]},
+  vault:{color:'var(--teal)',label:'Family Vault',count:14,entries:[
+    {dom:'Vault',txt:'Marcus safe foods: PBJ no crust, plain rice, Goldfish, apple slices.',date:'2 weeks ago'},
+    {dom:'Vault',txt:'Emergency contacts: Dr. Park 404-555-0182.',date:'1 month ago'},
+    {dom:'Vault',txt:'What works: Marcus 20 min decompression after baseball.',date:'3 days ago'}
+  ]}
+};
+
+function brainDom(key){
+  curBrain=key;
+  var doms=document.querySelectorAll('.dom');
+  for(var i=0;i<doms.length;i++)doms[i].classList.remove('on');
+  var el=document.getElementById('bd-'+key);
+  if(el)el.classList.add('on');
+  renderBrain(key);
+}
+
+function renderBrain(key){
+  var d=BDATA[key]; if(!d)return;
+  var m=document.getElementById('brain-main'); if(!m)return;
+  var rows='';
+  for(var i=0;i<d.entries.length;i++){
+    var e=d.entries[i];
+    rows+='<div class="be"><div class="be-dom" style="color:'+d.color+'">'+e.dom+'</div>'
+      +'<div class="be-text">'+e.txt+'</div>'
+      +'<div class="be-date">'+e.date+'</div></div>';
+  }
+  m.innerHTML='<div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px">'+d.label+'</div>'
+    +'<div style="font-size:10px;color:var(--ink-soft);margin-bottom:12px">'+d.count+' entries</div>'
+    +rows
+    +'<button class="btn" style="background:var(--green);color:#fff;margin-top:6px" onclick="go(14)">+ Add to Brain</button>';
+}
+
+var WDATA={
+  you:{name:'You',meta:'The CEO - AuDHD - she/her',color:'var(--hot-pink)',init:'Y',ct:'#fff',
+    overview:'<div class="ws-lbl">How you communicate</div><div class="ws-item">Processes best in writing, not verbally in the moment</div><div class="ws-item">Needs advance notice for schedule changes</div><div class="ws-lbl">What helps</div><div class="ws-item">Morning anchor routine before engaging with family</div><div class="ws-item">SpoonStack open before the day starts</div><div class="ws-item">Hot coffee before any hard conversations</div><div class="ws-lbl">Current focus</div><div><span class="wtag" style="background:var(--gold-pale);color:var(--ink)">Marcus OT eval</span> <span class="wtag" style="background:var(--green-pale);color:var(--green)">CVS prior auth</span></div>',
+    medical:'<div class="ws-lbl">Diagnoses</div><div class="ws-item">AuDHD diagnosed 2021</div><div class="ws-item">Anxiety managed with routine and movement</div><div class="ws-lbl">Medications</div><div class="ws-item">Vyvanse 30mg — prior auth pending at CVS</div><div class="ws-lbl">Providers</div><div class="ws-item">Dr. Chen psychiatry every 3 months</div><div class="ws-item">Dr. Park GP annual physical overdue</div>',
+    notes:'<div class="ws-lbl">Things that work</div><div class="ws-item">Body doubling for hard tasks</div><div class="ws-item">SpoonStack open at 8am before the chaos starts</div><div class="ws-lbl">Reminders to self</div><div class="ws-item">You are allowed to not be okay</div><div class="ws-item">Hard day does not equal bad mom</div>'
   },
-  {
-    name: 'Postpartum Survival', tag: 'Community', tagColor: '#1D9E75', tagBg: '#E1F5EE',
-    author: 'shared by @newmom_adhd', forks: 89,
-    desc: 'Minimum viable day when you have a newborn and a neurodivergent brain.',
-    widgets: ["Today's Triage", '"Not Today" Messages', "Branden Briefing", "Low-Effort Dinner", "Permission to Be Done"]
+  partner:{name:'Partner',meta:'Co-parent - ADHD - he/him',color:'var(--purple)',init:'P',ct:'#fff',
+    overview:'<div class="ws-lbl">Communication</div><div class="ws-item">Direct, prefers bullet points over narratives</div><div class="ws-item">Needs context upfront, not at the end</div><div class="ws-lbl">Current responsibilities</div><div class="ws-item">Thursday dinner and weekend school pickups</div>',
+    medical:'<div class="ws-lbl">Diagnoses</div><div class="ws-item">ADHD diagnosed 2019</div><div class="ws-lbl">Medications</div><div class="ws-item">Adderall XR 20mg daily</div>',
+    notes:'<div class="ws-lbl">What works</div><div class="ws-item">Written instructions over verbal</div><div class="ws-item">Reminders 30 min before, not day-of</div>'
   },
-  {
-    name: 'ADHD Work From Home', tag: 'Community', tagColor: '#639922', tagBg: '#EAF3DE',
-    author: 'shared by @adhdwfh', forks: 203,
-    desc: 'The context-switch hub. For days when work and home refuse to stay separate.',
-    widgets: ["Day Plan", "Brain Inbox", "Before-You-Reply Pause", "Replay Loop Interrupter", "Regulate First, Decide Later"]
+  zoe:{name:'Zoe',meta:'13 - 8th grade - she/her',color:'var(--cyan)',init:'Z',ct:'#fff',
+    overview:'<div class="ws-lbl">Personality</div><div class="ws-item">Social, energetic, gifted, gets bored easily</div><div class="ws-lbl">Schedule</div><div class="ws-item">Cheer Mon + Wed 5-7pm</div><div class="ws-item">Bus cancelled Thu + Fri, pickup 2:45</div>',
+    medical:'<div class="ws-lbl">Notes</div><div class="ws-item">No diagnoses</div><div class="ws-item">Orthodontist braces phase 2 pending</div><div class="ws-item">Annual physical schedule soon</div>',
+    notes:'<div class="ws-lbl">Safe foods</div><div class="ws-item">Pasta, toast, apples, cheese, chicken</div><div class="ws-lbl">What she needs</div><div class="ws-item">Advance warning before transitions</div>'
   },
-  {
-    name: 'IEP Season', tag: 'Community', tagColor: '#0B8FA6', tagBg: '#E0F5FA',
-    author: 'shared by @iep_warrior_mom', forks: 156,
-    desc: 'March through May. Every hub you need for IEP season in one place.',
-    widgets: ["IEP Prep + Questions", "Script the Opener", "Anticipate the Questions", "Brain Dump After", "Regulate First, Decide Later"]
+  marcus:{name:'Marcus',meta:'10 - 5th grade - he/him',color:'var(--lime)',init:'M',ct:'var(--ink)',
+    overview:'<div class="ws-lbl">Diagnoses</div><div><span class="wtag" style="background:var(--cyan-pale);color:var(--cyan)">Autism</span> <span class="wtag" style="background:var(--purple-pale);color:var(--purple)">Dyslexia</span> <span class="wtag" style="background:var(--coral-pale);color:var(--coral)">IEP</span></div><div class="ws-lbl">Current hyperfixation</div><div class="ws-item">Minecraft redstone circuits</div><div class="ws-lbl">Schedule</div><div class="ws-item">Baseball Mon + Wed + Sat</div><div class="ws-item">Speech therapy Mon + Wed 3pm</div>',
+    medical:'<div class="ws-lbl">Pending</div><div class="ws-item" style="color:var(--coral);font-weight:500">OT referral, follow up with Dr. Park</div><div class="ws-lbl">IEP</div><div class="ws-item">Extended time, separate testing room, Ms. Chen</div>',
+    notes:'<div class="ws-lbl">Safe foods</div><div class="ws-item">PBJ no crust, plain rice, Goldfish, apple slices</div><div class="ws-item" style="color:var(--coral)">Hard no: mixed textures, sauces, mushrooms</div><div class="ws-lbl">What works</div><div class="ws-item">Noise-canceling headphones at dinner</div><div class="ws-item">20 min decompression after baseball</div>'
   },
-  {
-    name: 'RSD Recovery Day', tag: 'Community', tagColor: '#C4427A', tagBg: '#FBEAF0',
-    author: 'shared by @rsd_is_real', forks: 314,
-    desc: 'When rejection dysphoria hit and you need to get through the rest of the day.',
-    widgets: ["Name What's Happening", "Is This a You-Problem or Them?", "3 Things That Are Actually True", "Replay Loop Interrupter", "Permission to Be Done"]
+  priya:{name:'Priya',meta:'10 - 5th grade twin',color:'var(--coral)',init:'P',ct:'#fff',
+    overview:'<div class="ws-lbl">Personality</div><div class="ws-item">Quieter twin, observant, strong sense of fairness</div><div class="ws-lbl">Schedule</div><div class="ws-item">Speech therapy Mon + Wed 3pm</div>',
+    medical:'<div class="ws-lbl">Diagnoses</div><div class="ws-item">Autism, IEP in progress</div><div class="ws-lbl">Upcoming</div><div class="ws-item">Speech eval overdue</div>',
+    notes:'<div class="ws-lbl">Safe foods</div><div class="ws-item">Most things, no mushrooms</div><div class="ws-lbl">What helps</div><div class="ws-item">Weighted blanket for decompression</div>'
   },
-  {
-    name: 'Sensitive People Pleaser', tag: 'Community', tagColor: '#E8399A', tagBg: '#FBEAF3',
-    author: 'shared by @people_pleaser_recovery', forks: 441,
-    desc: 'For when you said yes and now you can\'t.',
-    widgets: ["Before-You-Reply Pause", '"I Can\'t Right Now" Script', "Send It or Don\'t", "Regulate First, Decide Later", "Permission to Be Done"]
+  eli:{name:'Eli',meta:'10 - 5th grade twin',color:'var(--gold)',init:'E',ct:'var(--ink)',
+    overview:'<div class="ws-lbl">Personality</div><div class="ws-item">Louder twin, funny, emotionally expressive</div><div class="ws-lbl">Schedule</div><div class="ws-item">Speech therapy Mon + Wed 3pm</div>',
+    medical:'<div class="ws-lbl">Notes</div><div class="ws-item">Dyslexia, reading support at school</div><div class="ws-item">Retainer case in car glove box</div>',
+    notes:'<div class="ws-lbl">Safe foods</div><div class="ws-item">Quesadillas, fruit, cereal, mac and cheese</div><div class="ws-lbl">What helps</div><div class="ws-item">20 min quiet time before homework</div>'
   }
-];
+};
 
-// ── INIT ─────────────────────────────────────────────────
-let currentHub = HUBS[0];
-let currentWidget = null;
-let droppedList = [];
-let dragData = null;
-
-function init() {
-  buildHubSelector();
-  renderHub(HUBS[0]);
-  buildLibrary();
-  buildStacks();
-  initScrollAnim();
-  initNav();
+function wikiPerson(key){
+  curWiki=key; curWikiTab='Overview';
+  var ps=document.querySelectorAll('.wp');
+  for(var i=0;i<ps.length;i++)ps[i].classList.remove('on');
+  var el=document.getElementById('wp-'+key);
+  if(el)el.classList.add('on');
+  renderWiki(key,'Overview');
 }
 
-function buildHubSelector() {
-  const sel = document.getElementById('hubSelector');
-  HUBS.forEach(h => {
-    const btn = document.createElement('button');
-    btn.className = 'hub-btn' + (h.id === HUBS[0].id ? ' active' : '');
-    btn.innerHTML = `<div class="hub-btn-dot" style="background:${h.color}"></div><span class="hub-btn-name">${h.name}</span>`;
-    btn.onclick = () => { document.querySelectorAll('.hub-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderHub(h); closePanel(); };
-    sel.appendChild(btn);
-  });
-}
+function wikiTab(tab){curWikiTab=tab;renderWiki(curWiki,tab);}
 
-function renderHub(hub) {
-  currentHub = hub;
-  document.getElementById('hubAccent').style.background = hub.color;
-  const badge = document.getElementById('hubBadge');
-  badge.textContent = hub.name;
-  badge.style.background = hub.color;
-  document.getElementById('hubName').textContent = hub.name;
-  document.getElementById('hubDesc').textContent = hub.desc;
-  const grid = document.getElementById('widgetsGrid');
-  grid.innerHTML = '';
-  hub.widgets.forEach((w,i) => {
-    const el = document.createElement('div');
-    el.className = 'widget-thumb';
-    el.style.setProperty('--hub-color', hub.color);
-    el.style.cssText += `--hub-color:${hub.color}`;
-    el.innerHTML = `<style>.widget-thumb[data-id="${hub.id}-${i}"]::before{background:${hub.color}}</style><div class="wt-num">${w.num}</div><div class="wt-name">${w.name}</div><div class="wt-one">${w.one}</div>`;
-    el.setAttribute('data-id', `${hub.id}-${i}`);
-    el.onclick = () => openWidget(hub, w, i);
-    grid.appendChild(el);
-  });
-}
-
-function openWidget(hub, w, idx) {
-  document.querySelectorAll('.widget-thumb').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.widget-thumb')[idx]?.classList.add('active');
-  const panel = document.getElementById('widgetPanel');
-  const badge = document.getElementById('wpBadge');
-  badge.textContent = hub.name;
-  badge.style.background = hub.color;
-  document.getElementById('wpCounter').textContent = `${w.num} / 0${hub.widgets.length}`;
-  document.getElementById('wpName').textContent = w.name;
-  document.getElementById('wpOne').textContent = w.one;
-  document.getElementById('wpOutput').innerHTML = w.output;
-  const btns = document.getElementById('wpBtns');
-  btns.innerHTML = '';
-  w.btns.forEach((b,i) => {
-    const btn = document.createElement('button');
-    btn.className = 'wpb' + (i===0?' p':'');
-    if(i===0) btn.style.background = hub.color;
-    btn.textContent = b;
-    btns.appendChild(btn);
-  });
-  document.getElementById('wpPrompt').textContent = w.prompt;
-  panel.classList.add('open');
-  setTimeout(()=>panel.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
-}
-
-function closePanel() {
-  document.getElementById('widgetPanel').classList.remove('open');
-  document.querySelectorAll('.widget-thumb').forEach(t=>t.classList.remove('active'));
-}
-
-// ── BUILDER ──────────────────────────────────────────────
-function buildLibrary() {
-  const scroll = document.getElementById('libScroll');
-  HUBS.forEach(h => {
-    const grp = document.createElement('div');
-    grp.className = 'lib-hub-group';
-    grp.innerHTML = `<div class="lib-hub-label" style="background:${h.color}"><span class="lhl-dot"></span>${h.name}</div>`;
-    h.widgets.forEach(w => {
-      const item = document.createElement('div');
-      item.className = 'lib-widget';
-      item.draggable = true;
-      item.innerHTML = `<span class="drag-handle">⠿</span>${w.name}`;
-      item.ondragstart = (e) => {
-        dragData = { ...w, hubName: h.name, hubColor: h.color };
-        e.dataTransfer.setData('text/plain', w.name);
-        item.style.opacity = '.5';
-      };
-      item.ondragend = () => { item.style.opacity = '1'; };
-      grp.appendChild(item);
-    });
-    scroll.appendChild(grp);
-  });
-}
-
-function allowDrop(e) {
-  e.preventDefault();
-  document.getElementById('hubCanvas').classList.add('dragover');
-}
-
-function dropWidget(e) {
-  e.preventDefault();
-  document.getElementById('hubCanvas').classList.remove('dragover');
-  if (!dragData) return;
-  if (droppedList.find(d => d.name === dragData.name)) return; // no dupes
-  droppedList.push({ ...dragData });
-  renderDropped();
-  dragData = null;
-}
-
-document.addEventListener('dragover', ()=>{});
-document.addEventListener('dragleave', (e)=>{
-  if(!document.getElementById('hubCanvas').contains(e.relatedTarget)) {
-    document.getElementById('hubCanvas').classList.remove('dragover');
+function renderWiki(key,tab){
+  var p=WDATA[key]; if(!p)return;
+  var m=document.getElementById('wiki-main'); if(!m)return;
+  var tabKeys=['Overview','Medical','Notes'];
+  var tabHtml='';
+  for(var i=0;i<tabKeys.length;i++){
+    var t=tabKeys[i];
+    var active=t===tab?' on':'';
+    tabHtml+='<div class="wt'+active+'" data-tab="'+t+'" onclick="wikiTab(this.dataset.tab)">'+t+'</div>';
   }
-});
+  var content=tab==='Overview'?p.overview:tab==='Medical'?p.medical:p.notes;
+  m.innerHTML='<div class="wph">'
+    +'<div class="wpa-lg" style="background:'+p.color+';color:'+p.ct+'">'+p.init+'</div>'
+    +'<div><div class="wpname">'+p.name+'</div><div class="wpmeta">'+p.meta+'</div></div>'
+    +'</div>'
+    +'<div class="wtabs">'+tabHtml+'</div>'
+    +'<div>'+content+'</div>';
+}
 
-function renderDropped() {
-  const hint = document.getElementById('dropHint');
-  const grid = document.getElementById('droppedWidgets');
-  if (droppedList.length > 0) {
-    hint.style.display = 'none';
-    grid.style.display = 'grid';
+var WIDGETS={
+  oht:{color:'var(--gold)',icon:'📞',name:'One Hard Thing',stack:'Morning Energy',shape:'Script',
+    desc:'The task sitting there for days. SpoonStack pre-loads it from your Brain and writes the opener so you do not freeze.',
+    sample:'<div style="background:var(--lime-pale);border-left:3px solid var(--lime);border-radius:0 10px 10px 0;padding:10px 12px;font-size:12px;color:var(--ink);font-style:italic;margin-bottom:6px">Hi, I am calling about a prior authorization for Vyvanse. I want to check on the status.</div><div style="font-size:10px;color:var(--ink-soft);font-style:italic">Fallback: I do not know, can you tell me what I need to find out?</div>'
+  },
+  dayplan:{color:'var(--gold)',icon:'🗓',name:'Day Plan',stack:'Morning Energy',shape:'Dump + Sort',
+    desc:'Dump everything on your plate. Get back a prioritized timeline with your best focus window starred and conflicts flagged.',
+    sample:'<div style="font-family:var(--fm);font-size:10px;line-height:2;color:var(--ink-soft)">7:30 school drop-off<br><span style="color:var(--gold);font-weight:600">8:30 best brain window — CVS call</span><br>10:00 email contractor<br>3:00 twins speech pickup</div>'
+  },
+  triage:{color:'var(--coral)',icon:'🌊',name:"Today's Triage",stack:'Low Spoons Day',shape:'Dump + Sort',
+    desc:'Your day just collapsed. Paste what was supposed to happen. Get back the survival version.',
+    sample:'<div style="display:flex;flex-direction:column;gap:5px"><div style="display:flex;gap:7px;align-items:center"><span style="font-family:var(--fm);font-size:8px;background:var(--coral-pale);color:var(--coral);padding:2px 7px;border-radius:100px">Cancel</span><span style="font-size:11px">Dentist, Speech therapy</span></div><div style="display:flex;gap:7px;align-items:center"><span style="font-family:var(--fm);font-size:8px;background:var(--green-pale);color:var(--green);padding:2px 7px;border-radius:100px">Keep</span><span style="font-size:11px">School drop-off</span></div></div>'
+  },
+  dumpster:{color:'var(--pink)',icon:'🔥',name:"Name What's Happening",stack:'Emotional Dumpster Fire',shape:'Dump + Sort',
+    desc:'You feel like garbage and you do not know why. Dump it here and get back what is actually going on.',
+    sample:'<div style="background:var(--pink-pale);border-radius:9px;padding:10px 12px"><div style="font-size:11px;color:var(--ink);margin-bottom:4px"><strong>What is underneath:</strong> Rejection sensitivity triggered by the group chat silence</div><div style="font-size:11px;color:var(--ink)"><strong>What is real:</strong> You are exhausted and your brain is catastrophizing</div></div>'
+  },
+  teacher:{color:'var(--cyan)',icon:'✉️',name:'Teacher Email Draft',stack:'Kid Stuff',shape:'Draft',
+    desc:'Advocate for your kid without sounding like That Mom. Pre-loaded with the teacher name and IEP details.',
+    sample:'<div style="background:var(--green);color:#fff;padding:10px 12px;border-radius:10px 10px 10px 3px;font-size:11px;line-height:1.5">Subject: Quick check-in about Marcus<br><br>Hi Ms. Chen, I wanted to reach out about something Marcus mentioned. I would love to hear what you are seeing from your end.</div>'
+  },
+  sendit:{color:'var(--plum)',icon:'👁',name:"Send It or Don't",stack:'Text You Have Been Avoiding',shape:'Verdict',
+    desc:'Your thumb is hovering over send. Paste the draft. Get a verdict.',
+    sample:'<div style="background:var(--plum-pale);border-radius:10px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:600;color:var(--plum);margin-bottom:5px">WAIT TIL MORNING</div><div style="font-size:10px;color:var(--ink-soft);line-height:1.4">The feeling is valid. The timing is not. This conversation deserves a version of you that slept.</div></div>'
   }
-  grid.innerHTML = '';
-  droppedList.forEach((w, i) => {
-    const el = document.createElement('div');
-    el.className = 'dropped-widget';
-    el.innerHTML = `
-      <div class="dw-accent" style="background:${w.hubColor}"></div>
-      <div class="dw-hub" style="color:${w.hubColor}">${w.hubName}</div>
-      <div class="dw-name">${w.name}</div>
-      <div class="dw-one">${w.one}</div>
-      <button class="dw-remove" onclick="removeDropped(${i})" title="Remove">✕</button>`;
-    grid.appendChild(el);
-  });
-  if (droppedList.length >= 3) {
-    document.getElementById('hubSaveBtn').classList.add('show');
-  }
+};
+
+function showWidget(key){
+  var w=WIDGETS[key]; if(!w)return;
+  var c=document.getElementById('widget-sheet-content');
+  c.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">'
+    +'<div style="width:36px;height:36px;border-radius:10px;background:'+w.color+';display:flex;align-items:center;justify-content:center;font-size:18px">'+w.icon+'</div>'
+    +'<div><div style="font-size:14px;font-weight:600;color:var(--ink)">'+w.name+'</div>'
+    +'<div style="font-size:10px;color:var(--ink-soft)">'+w.stack+'</div></div></div>'
+    +'<div style="font-size:12px;color:var(--ink-soft);line-height:1.55;margin-bottom:12px">'+w.desc+'</div>'
+    +'<div style="font-family:var(--fm);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px">Sample output</div>'
+    +w.sample
+    +'<div style="display:flex;gap:6px;margin-top:14px">'
+    +'<button class="btn" style="background:'+w.color+';color:var(--ink);flex:1" id="ws-add-btn">Add to my stack</button>'
+    +'<button class="btn" style="background:var(--paper);color:var(--ink-soft);flex:1" id="ws-close-btn">Close</button>'
+    +'</div>';
+  openModal('widget-sheet');
+  var addBtn=document.getElementById('ws-add-btn');
+  if(addBtn)addBtn.onclick=function(){toast('Added!');closeModal('widget-sheet');};
+  var closeBtn=document.getElementById('ws-close-btn');
+  if(closeBtn)closeBtn.onclick=function(){closeModal('widget-sheet');};
 }
 
-function removeDropped(i) {
-  droppedList.splice(i,1);
-  if (droppedList.length === 0) {
-    document.getElementById('dropHint').style.display = '';
-    document.getElementById('droppedWidgets').style.display = 'none';
-    document.getElementById('hubSaveBtn').classList.remove('show');
-  } else {
-    renderDropped();
-  }
+function forkStack(name){toast('"'+name+'" forked to your stacks!');}
+
+function doScan(){
+  toast('Scanning...');
+  setTimeout(function(){
+    toast('Document processed!');
+    var list=document.getElementById('inbox-list'); if(!list)return;
+    var el=document.createElement('div');
+    el.className='iitem';
+    el.innerHTML='<div class="ihdr"><div class="ityp" style="background:var(--lime-pale);color:var(--lime)">Scan</div><div class="itime">Just now</div></div>'
+      +'<div class="itxt">Prescription: Vyvanse 30mg. Refills: 2. CVS Pharmacy. Prior auth required.</div>'
+      +'<div class="ipills">'
+      +'<div class="ip p" onclick="toast(\"Filed to Health!\")">File to Health</div>'
+      +'<div class="ip" onclick="toast(\"Added to widget!\")">Add to widget</div>'
+      +'<div class="ip" onclick="dismissItem(this)">Dismiss</div>'
+      +'</div>';
+    list.insertBefore(el,list.firstChild);
+  },1600);
 }
 
-function saveHub() {
-  const name = document.getElementById('hubNameInput').value || 'My Custom Hub';
-  const btn = document.getElementById('hubSaveBtn');
-  btn.textContent = `✓ "${name}" saved!`;
-  btn.style.background = '#1D9E75';
-  setTimeout(()=>{ btn.textContent='Save stack ✓'; btn.style.background=''; },3000);
+function dismissItem(btn){
+  var item=btn.closest('.iitem'); if(!item)return;
+  item.style.transition='all .3s';
+  item.style.opacity='0';
+  item.style.transform='translateX(20px)';
+  setTimeout(function(){item.remove();},320);
+  toast('Dismissed');
 }
 
-// ── COMMUNITY STACKS ─────────────────────────────────────
-function buildStacks() {
-  const grid = document.getElementById('stacksGrid');
-  STACKS.forEach(s => {
-    const card = document.createElement('div');
-    card.className = 'stack-card fade-in';
-    const widgetPills = s.widgets.map(w=>`<span class="sc-widget-pill">${w}</span>`).join('');
-    card.innerHTML = `
-      <div class="sc-header">
-        <div class="sc-info">
-          <span class="sc-tag" style="background:${s.tagBg};color:${s.tagColor}">${s.tag}</span>
-          <div class="sc-name">${s.name}</div>
-          <div class="sc-author">${s.author}</div>
-        </div>
-      </div>
-      <div style="padding:0 20px 12px;font-size:13px;color:#888780;line-height:1.5;">${s.desc}</div>
-      <div class="sc-widgets">${widgetPills}</div>
-      <div class="sc-footer">
-        <span class="sc-forks">🔱 ${s.forks} forks</span>
-        <button class="sc-fork-btn" onclick="forkStack(this,'${s.name}')">Fork this stack</button>
-      </div>`;
-    grid.appendChild(card);
-  });
-}
-
-function forkStack(btn, name) {
-  btn.textContent = '✓ Added to your hubs';
-  btn.classList.add('forked');
-  setTimeout(()=>{ btn.textContent='Fork this stack'; btn.classList.remove('forked'); },3000);
-}
-
-// ── WAITLIST ──────────────────────────────────────────────
-function join(n) {
-  const email = document.getElementById(`email-${n}`).value;
-  if (!email || !email.includes('@')) {
-    document.getElementById(`email-${n}`).style.borderColor='#DC2626'; return;
-  }
-  document.querySelectorAll('.waitlist-form')[n-1].style.display='none';
-  document.getElementById(`ok-${n}`).style.display='block';
-  console.log('Waitlist:', email);
-}
-document.addEventListener('keypress', e => {
-  if(e.key==='Enter') {
-    if(document.activeElement.id==='email-1') join(1);
-    if(document.activeElement.id==='email-2') join(2);
-  }
-});
-
-// ── SCROLL ANIMATIONS ─────────────────────────────────────
-function initScrollAnim() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.07, rootMargin:'0px 0px -40px 0px' });
-  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-}
-
-// ── NAV ───────────────────────────────────────────────────
-function initNav() {
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', ()=>{ nav.classList.toggle('scrolled', window.scrollY>60); });
-}
-
-init();
+go(1);
+renderBrain('kids');
+renderWiki('you','Overview');
 </script>
 </body>
 </html>
